@@ -1,0 +1,25 @@
+---
+const { news } = Astro.props;
+---
+
+<section class="section">
+  <div class="section-heading">
+    <p class="eyebrow">Aktuelles</p>
+    <h2 class="section-title">Aktionen und saisonale Highlights</h2>
+  </div>
+
+  <div class="grid gap-5 lg:grid-cols-3">
+    {news.map((item) => (
+      <article class="overflow-hidden rounded-lg bg-white shadow-sm">
+        <img class="h-52 w-full object-cover" src={item.image} alt="" loading="lazy" />
+        <div class="p-6">
+          <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.18em] text-alero-gold">
+            <span>{item.tag}</span>
+            <span>{item.date}</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl font-bold leading-tight text-alero-dark">{item.title}</h3>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

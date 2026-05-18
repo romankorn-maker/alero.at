@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.vite/
+.astro/
+.DS_Store
+Thumbs.db
+
+# Local exports and legacy build attempts
+/alero-homepage-dist.zip
+/hosting-clean/
+/hosting-lite/
+/hosting-static/
+/index.html
+/vite.config.js

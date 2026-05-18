@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --color-alero-gold: #ba7517;
+  --color-alero-gold-dark: #9f6111;
+  --color-alero-dark: #1a1008;
+  --color-alero-ink: #1a1a1a;
+  --color-alero-muted: #6f6b64;
+  --color-alero-paper: #f5f5f0;
+  --color-alero-cream: #faeeda;
+  --color-alero-line: #e8e5dc;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--color-alero-paper);
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .top-link {
+    @apply font-medium text-alero-gold transition hover:text-alero-gold-dark;
+  }
+
+  .nav-link {
+    @apply transition hover:text-white;
+  }
+
+  .nav-link.active {
+    @apply text-alero-gold;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-alero-gold px-6 py-3 text-sm font-semibold text-white transition hover:bg-alero-gold-dark;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10;
+  }
+
+  .section {
+    @apply mx-auto max-w-7xl px-4 py-16 lg:px-8 lg:py-20;
+  }
+
+  .section-heading {
+    @apply mx-auto mb-10 max-w-3xl text-center;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-alero-gold;
+  }
+
+  .section-title {
+    @apply mt-3 font-display text-4xl font-bold leading-tight text-alero-dark sm:text-5xl;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-base leading-7 text-alero-muted;
+  }
+
+  .feature-row {
+    @apply flex gap-3 text-sm leading-6 text-alero-muted;
+  }
+
+  .feature-row span {
+    @apply mt-2 h-2 w-2 shrink-0 rounded-full bg-alero-gold;
+  }
+
+  .feature-row strong {
+    @apply font-semibold text-alero-dark;
+  }
+
+  .stat {
+    @apply block font-display text-3xl font-bold text-alero-gold;
+  }
+
+  .stat + span {
+    @apply mt-1 block text-xs leading-5 text-alero-muted;
+  }
+
+  .review-card {
+    @apply rounded-lg border border-white/10 bg-white/[0.06] p-6;
+  }
+
+  .review-card p {
+    @apply mt-4 text-base leading-8 text-white/70;
+  }
+
+  .review-card div:last-child {
+    @apply mt-5 flex flex-col gap-1;
+  }
+
+  .review-card strong {
+    @apply text-sm font-semibold text-white;
+  }
+
+  .review-card span {
+    @apply text-xs text-white/40;
+  }
+
+  .app-button {
+    @apply inline-flex items-center justify-center rounded-md bg-white px-6 py-3 text-sm font-bold text-alero-gold transition hover:bg-alero-dark hover:text-white;
+  }
+
+  .phone {
+    @apply flex h-56 w-32 items-center justify-center rounded-[1.6rem] border border-white/35 bg-white/15 p-3 shadow-2xl backdrop-blur sm:h-72 sm:w-40;
+  }
+
+  .phone span {
+    @apply flex h-full w-full items-center justify-center rounded-[1.1rem] bg-white/10 font-display text-2xl font-bold text-white/70;
+  }
+
+  .footer-store {
+    @apply flex rounded-md border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white/65 transition hover:border-alero-gold/60 hover:text-white;
+  }
+}
