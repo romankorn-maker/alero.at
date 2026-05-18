@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alero Handels GmbH — Lebensmittel & Verpackung für Gastronomie in Wien</title>
+<meta name="description" content="Seit 2005 beliefert Alero Restaurants, Hotels und Catering in Wien. Tiefkühlprodukte, Öle, Verpackung und Hygiene — bestellen Sie bequem in unserer App.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    '#1a1008',
+          inkdeep:'#0e0905',
+          olive: '#3DA84F',
+          leaf: '#6dc878',
+          cream:  '#FAEEDA',
+          paper:  '#f7f5f0',
+          line:   '#e8e3d8',
+        },
+        fontFamily: {
+          display: ['"Barlow Condensed"', 'sans-serif'],
+          sans:    ['"Barlow"', 'sans-serif'],
+          serif:   ['"Fraunces"', 'Georgia', 'serif'],
+        },
+        boxShadow: {
+          card: '0 1px 2px rgba(26,16,8,0.04), 0 12px 32px -16px rgba(26,16,8,0.18)',
+          cardHover: '0 8px 16px -4px rgba(26,16,8,0.08), 0 24px 48px -20px rgba(61,168,79,0.35)',
+        },
+      }
+    }
+  }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: #f7f5f0; color: #1a1008; -webkit-font-smoothing: antialiased; }
+
+  /* ── Grain texture overlay ── */
+  .grain::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── Hero atmospheric gradient ── */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 80% 20%, rgba(61,168,79,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(61,168,79,0.08) 0%, transparent 55%),
+      linear-gradient(180deg, #0e0905 0%, #1a1008 100%);
+  }
+
+  /* ── Decorative section divider ── */
+  .divider-rule {
+    background-image: linear-gradient(90deg, transparent, rgba(61,168,79,0.4) 50%, transparent);
+    height: 1px;
+  }
+
+  /* ── Marquee for partners ── */
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── Slide reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Product card hover ── */
+  .prod-card { transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s, border-color 0.4s; }
+  .prod-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px -4px rgba(26,16,8,0.06), 0 24px 48px -20px rgba(61,168,79,0.25); border-color: rgba(61,168,79,0.5); }
+  .prod-card:hover .prod-arrow { transform: translateX(4px); }
+  .prod-arrow { transition: transform 0.3s; }
+
+  /* ── Hero number ── */
+  .hero-ghost-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(180px, 26vw, 360px);
+    line-height: 0.85;
+    color: rgba(61,168,79,0.07);
+    letter-spacing: -0.05em;
+    user-select: none;
+    pointer-events: none;
+  }
+  /* When the ghost contains a product image (slide 2 — Öl) */
+  .hero-ghost-num img {
+    height: clamp(280px, 52vh, 560px);
+    width: auto;
+    display: block;
+    margin-top: 40px;
+    margin-right: -1vw;
+    filter: drop-shadow(0 24px 60px rgba(0,0,0,0.5));
+    opacity: 0.97;
+  }
+
+  /* ── Decorative tick marks ── */
+  .ticks {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(61,168,79,0.3) 0,
+      rgba(61,168,79,0.3) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+    height: 6px;
+  }
+
+  /* ── Number tabular ── */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ── Slide indicator transitions ── */
+  .slide-ind { transition: width 0.5s ease, background 0.5s ease; }
+
+  /* ── Product image float-in ── */
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(-50%) translateX(20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
+  }
+
+  /* ── Sticky banner slide-in ── */
+  .sticky-banner { transition: transform 0.4s ease; }
+  .sticky-banner.hide { transform: translateY(100%); }
+
+
+  /* -- Hero banner image layer -- */
+  .hero-banner-image { opacity: 0.68; transform: scale(1.02); transition: opacity 0.45s ease, transform 7s ease; }
+  .hero-banner-image.is-changing { opacity: 0; }
+  .hero-bg:hover .hero-banner-image { transform: scale(1.045); }
+  .hero-copy-panel { text-shadow: 0 18px 48px rgba(0,0,0,0.45); }
+</style>
+</head>
+<body class="bg-paper text-ink">
+
+<!-- ════════════════════════════════════════════
+     1. TOP BAR
+════════════════════════════════════════════ -->
+<div class="hidden md:block bg-[#f0ece1] border-b border-line/60">
+  <div class="max-w-[1280px] mx-auto px-8 py-2 flex items-center justify-between">
+    <div class="flex items-center gap-3 text-[11px] uppercase tracking-[0.15em] text-ink/50">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-olive"></span>
+      <span>Großhandel · B2B · Wien seit 2009</span>
+    </div>
+    <div class="flex items-center gap-7 text-[13px]">
+      <a href="tel:+431748952" class="flex items-center gap-2.5 text-ink hover:text-olive transition group">
+        <span class="w-7 h-7 rounded-full bg-cream flex items-center justify-center group-hover:bg-olive transition">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#3DA84F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </span>
+        <span class="tabular font-medium">+43 1 748 95 20</span>
+      </a>
+      <a href="mailto:office@alero.at" class="flex items-center gap-2.5 text-ink hover:text-olive transition group">
+        <span class="w-7 h-7 rounded-full bg-cream flex items-center justify-center group-hover:bg-olive transition">
+          <svg class="w-3 h-3 text-olive group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </span>
+        <span class="font-medium">office@alero.at</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     2. NAVIGATION
+════════════════════════════════════════════ -->
+<nav class="bg-inkdeep sticky top-0 z-40 border-b border-white/5">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-4 flex items-center justify-between gap-8">
+    <a href="#" class="flex items-center gap-3">
+      <img src="data:image/png;base64,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" alt="Alero Handels GmbH" class="h-10 md:h-12 w-auto" width="183" height="94">
+    </a>
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="#" class="text-[13px] font-medium text-olive px-3.5 py-2 relative">
+        Startseite
+        <span class="absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-olive"></span>
+      </a>
+      <a href="#ueber-uns" class="text-[13px] font-medium text-white/70 hover:text-white px-3.5 py-2 transition">Über uns</a>
+      <a href="#produkte" class="text-[13px] font-medium text-white/70 hover:text-white px-3.5 py-2 transition">Produkte</a>
+      <a href="#aktionen" class="text-[13px] font-medium text-white/70 hover:text-white px-3.5 py-2 transition">Aktionen</a>
+      <a href="#kontakt" class="text-[13px] font-medium text-white/70 hover:text-white px-3.5 py-2 transition">Kontakt</a>
+    </div>
+    <a href="#app" class="group relative bg-olive hover:bg-leaf transition text-white text-[13px] font-semibold px-5 py-2.5 rounded-sm flex items-center gap-2 overflow-hidden">
+      <span class="relative z-10">App öffnen</span>
+      <svg class="relative z-10 w-3.5 h-3.5 group-hover:translate-x-0.5 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M5 12h14M13 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     3. HERO
+════════════════════════════════════════════ -->
+<section class="hero-bg grain relative overflow-hidden">
+  <img id="hero-banner-image" class="hero-banner-image absolute inset-0 w-full h-full object-cover pointer-events-none" src="assets/tiefkuehl-produkte.png" alt="">
+  <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(90deg, rgba(14,9,5,0.96) 0%, rgba(14,9,5,0.82) 34%, rgba(14,9,5,0.34) 72%, rgba(14,9,5,0.62) 100%);"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(14,9,5,0.46) 0%, rgba(14,9,5,0.04) 46%, rgba(14,9,5,0.78) 100%);"></div>
+  <!-- giant ghost icon -->
+  <div class="absolute right-[-2vw] top-[-4vh] hero-ghost-num select-none">❄</div>
+
+  <!-- tick marks accent -->
+  <div class="absolute top-8 left-8 w-32 ticks opacity-60"></div>
+
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 pt-16 md:pt-20 pb-12 relative z-10">
+
+    <!-- slide indicators + counter -->
+    <div class="flex items-center gap-4 mb-10">
+      <div class="flex gap-1.5">
+        <span class="slide-ind h-[3px] w-16 bg-olive rounded-full" data-ind="0"></span>
+        <span class="slide-ind h-[3px] w-10 bg-white/15 rounded-full" data-ind="1"></span>
+        <span class="slide-ind h-[3px] w-10 bg-white/15 rounded-full" data-ind="2"></span>
+        <span class="slide-ind h-[3px] w-10 bg-white/15 rounded-full" data-ind="3"></span>
+      </div>
+      <span class="text-[11px] uppercase tracking-[0.2em] text-white/40 tabular"><span id="slide-current">01</span> / 04</span>
+    </div>
+
+    <!-- slides container -->
+    <div id="slides" class="hero-copy-panel relative z-10">
+      <!-- Slide 1 -->
+      <article class="slide" data-slide="0">
+        <div class="inline-flex items-center gap-2.5 bg-olive/15 border border-olive/30 text-olive text-[11px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-sm mb-6">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-olive animate-pulse"></span>
+          Frühlingsangebot · gültig bis 30. April
+        </div>
+        <h1 class="font-display font-bold text-white text-[56px] md:text-[88px] leading-[0.92] tracking-[-0.01em] max-w-[14ch] mb-7">
+          Tiefkühlprodukte<br>
+          <span class="text-olive">bis −20%</span> günstiger
+        </h1>
+        <p class="font-serif italic text-white/55 text-[17px] md:text-[19px] leading-relaxed max-w-[44ch] mb-10">
+          Frühlingspreise auf beliebte Positionen aus dem Tiefkühlsortiment. Direkt im Lager Dassanowskyweg — Lieferung innerhalb von 24 Stunden.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#app" class="group bg-olive hover:bg-leaf transition text-white font-semibold px-7 py-4 rounded-sm flex items-center gap-3 text-[14px]">
+            Jetzt in der App ansehen
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#produkte" class="text-white/70 hover:text-white text-[13px] font-medium tracking-wide flex items-center gap-2 border-b border-white/20 hover:border-white/60 pb-1 transition">
+            Sortiment ansehen
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Slides preview row -->
+    <div class="mt-16 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <button class="slide-btn group text-left p-4 rounded-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-olive/40 transition" data-go="0">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-olive font-semibold tabular">01 · Aktion</span>
+          <span class="text-white/30 group-hover:text-olive transition text-xs">→</span>
+        </div>
+        <div class="font-display font-semibold text-white text-[15px]">Tiefkühl bis −20%</div>
+      </button>
+      <button class="slide-btn group text-left p-4 rounded-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-olive/40 transition" data-go="1">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-olive font-semibold tabular">02 · Eigene Marke</span>
+          <span class="text-white/30 group-hover:text-olive transition text-xs">→</span>
+        </div>
+        <div class="font-display font-semibold text-white text-[15px]">Alero Öl</div>
+      </button>
+      <button class="slide-btn group text-left p-4 rounded-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-olive/40 transition" data-go="2">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-olive font-semibold tabular">03 · Saison</span>
+          <span class="text-white/30 group-hover:text-olive transition text-xs">→</span>
+        </div>
+        <div class="font-display font-semibold text-white text-[15px]">Grillen &amp; Holzkohle</div>
+      </button>
+      <button class="slide-btn group text-left p-4 rounded-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-olive/40 transition" data-go="3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-olive font-semibold tabular">04 · Klassiker</span>
+          <span class="text-white/30 group-hover:text-olive transition text-xs">→</span>
+        </div>
+        <div class="font-display font-semibold text-white text-[15px]">Nuggets, Wedges &amp; Co.</div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     4. PRODUKTE
+════════════════════════════════════════════ -->
+<section id="produkte" class="bg-paper">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+
+    <header class="reveal text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-3 mb-5">
+        <span class="w-8 h-px bg-olive"></span>
+        <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Unser Sortiment</span>
+        <span class="w-8 h-px bg-olive"></span>
+      </div>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05] mb-4">
+        Acht Bereiche.<br>Ein Lieferant.
+      </h2>
+      <p class="text-ink/60 text-[15px] leading-relaxed">
+        Tiefkühl-Klassiker, Speiseöle eigener Marke, Grillsortiment, Verpackung und Hygiene — alles aus einer Hand. Vollständiger Katalog mit Preisen in der Alero App. Bestellungen werden im Zentrallager Dassanowskyweg konfektioniert und in Wien innerhalb von 24 Stunden geliefert.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+
+      <!-- Card 1 — Tiefkühlprodukte -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#dbecfb] to-[#c8e0f5] flex items-center justify-center text-2xl">❄</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">01</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Tiefkühl&shy;produkte</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">McCain Pommes, Nuggets, Wedges, Onion Rings — friteusenfertige Klassiker.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 2 — Lebensmittel -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col" style="transition-delay:60ms">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#eaf3de] to-[#d8e8c4] flex items-center justify-center text-2xl">🥫</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">02</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Lebensmittel</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">Konserven, Saucen, Trockenwaren und Spezialitäten für Profiküchen.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 3 — Sonnenblumen- & Olivenöl (Eigenmarke!) -->
+      <a href="#" class="prod-card group reveal bg-white border-2 border-olive/30 rounded-sm p-7 flex flex-col relative overflow-hidden" style="transition-delay:120ms">
+        <div class="absolute top-3 right-3 bg-olive text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm">Eigenmarke</div>
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-cream to-[#f3dcb5] flex items-center justify-center text-2xl">🌻</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">03</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Sonnenblumen- &amp; Olivenöl</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1"><strong class="text-ink">alero</strong> &amp; Olio d'Oro — in 1 L, 5 L und 10 L Gebinden.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 4 — Grillen, Holzkohle & Brennholz -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col" style="transition-delay:180ms">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#faece7] to-[#f3d4c8] flex items-center justify-center text-2xl">🔥</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">04</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Holzkohle &amp; Brennholz</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">Restaurant-Holzkohle 10 kg, Brennholz Buche, Kamado-Grills.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 5 — Styropor Verpackung -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#eeedfe] to-[#dbd9f5] flex items-center justify-center text-2xl">🥡</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">05</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Styropor Verpackung</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">Take-away Boxen, Klappschalen, verschiedene Formate.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 6 — Salat- & Feinkost-Boxen (PP) -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col" style="transition-delay:60ms">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#e1f5ee] to-[#c8ead9] flex items-center justify-center text-2xl">🥗</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">06</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Salat- &amp; Feinkost-Boxen</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">PP-Behälter mit Deckel für Salat, Feinkost, Catering.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 7 — Papier & Karton -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col" style="transition-delay:120ms">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-cream to-[#f3dcb5] flex items-center justify-center text-2xl">☕</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">07</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Papier &amp; Karton</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">Kaffeebecher, Kraftboxen, Papiertaschen — Standard und mit Logo.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+      <!-- Card 8 — Alu Verpackung -->
+      <a href="#" class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col" style="transition-delay:180ms">
+        <div class="flex items-start justify-between mb-7">
+          <div class="w-14 h-14 rounded-sm bg-gradient-to-br from-[#e5e5e5] to-[#cccccc] flex items-center justify-center text-2xl">🍱</div>
+          <span class="font-display text-olive/40 text-sm tabular font-semibold">08</span>
+        </div>
+        <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">Alu Verpackung</h3>
+        <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">Alu-Schalen, Deckel und verschiedene Formate für Catering.</p>
+        <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+          Sortiment <span class="prod-arrow inline-block">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- App callout under grid -->
+    <div class="reveal mt-12 flex flex-wrap items-center justify-between gap-6 bg-ink rounded-sm p-6 md:p-8 relative overflow-hidden">
+      <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.04] pointer-events-none" style="background: radial-gradient(circle at center, #3DA84F 0%, transparent 60%);"></div>
+      <div class="relative z-10">
+        <div class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold mb-2">Vollständiger Katalog</div>
+        <div class="font-display font-bold text-white text-2xl md:text-[28px] leading-tight">Alle Produkte, Preise und Verfügbarkeiten in der App</div>
+      </div>
+      <a href="#app" class="relative z-10 bg-white text-ink hover:bg-olive hover:text-white transition font-semibold px-6 py-3.5 rounded-sm text-[13px] flex items-center gap-2 whitespace-nowrap">
+        App öffnen
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     5. ÜBER UNS
+════════════════════════════════════════════ -->
+<section id="ueber-uns" class="bg-[#efeae0] relative overflow-hidden">
+  <!-- subtle pattern -->
+  <div class="absolute inset-0 opacity-[0.4] pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, rgba(26,16,8,0.06) 1px, transparent 0); background-size: 24px 24px;"></div>
+
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28 relative z-10 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+    <!-- Left visual -->
+    <div class="reveal lg:col-span-5 relative">
+      <!-- mock photo -->
+      <div class="aspect-[4/5] relative rounded-sm overflow-hidden bg-ink">
+        <!-- atmospheric "warehouse" placeholder using gradients -->
+        <div class="absolute inset-0" style="background:
+          linear-gradient(180deg, rgba(61,168,79,0.15) 0%, transparent 30%),
+          linear-gradient(0deg, rgba(0,0,0,0.5) 0%, transparent 50%),
+          repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 100px, transparent 100px, transparent 200px),
+          linear-gradient(135deg, #2a1a0e 0%, #1a1008 50%, #0e0905 100%);">
+        </div>
+        <!-- icon cluster suggesting "warehouse" -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-32 h-32 text-olive/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <path d="M3 9l9-6 9 6v12H3V9z"/>
+            <path d="M3 9h18M9 21V12h6v9M9 12h6"/>
+          </svg>
+        </div>
+        <!-- caption overlay -->
+        <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+          <div class="text-[10px] uppercase tracking-[0.2em] text-olive font-semibold mb-1">Zentrallager</div>
+          <div class="font-display text-lg leading-tight">Dassanowskyweg 16a<br>1220 Wien</div>
+        </div>
+      </div>
+
+      <!-- floating badge -->
+      <div class="hidden md:block absolute -bottom-6 -right-6 bg-olive text-white rounded-sm p-5 shadow-cardHover">
+        <div class="font-display text-[40px] leading-none font-bold tabular">15<span class="text-2xl align-top ml-1">+</span></div>
+        <div class="text-[10px] uppercase tracking-[0.15em] mt-1">Jahre in Wien</div>
+      </div>
+    </div>
+
+    <!-- Right content -->
+    <div class="lg:col-span-7">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Über Alero · seit 2009</span>
+        </div>
+        <h2 class="font-display font-bold text-4xl md:text-[52px] text-ink leading-[1.02] mb-7">
+          Der Wiener Lieferant für <span class="font-serif italic font-normal text-olive">Gastronomie</span> &amp; Imbisse
+        </h2>
+        <p class="text-ink/65 text-[16px] leading-[1.75] mb-9 max-w-[58ch]">
+          Alero Handels GmbH beliefert seit über fünfzehn Jahren Restaurants, Imbisse und Catering-Betriebe in Wien. Tiefkühl-Klassiker namhafter Marken wie <strong class="text-ink">McCain</strong>, Sonnenblumenöl unter unserer <strong class="text-ink">eigenen Marke alero</strong>, ein komplettes Grillsortiment mit Holzkohle und Brennholz, plus Verpackung für jeden Take-away-Bedarf — alles aus einer Hand.
+        </p>
+
+        <ul class="space-y-4 mb-10">
+          <li class="reveal flex items-start gap-4">
+            <span class="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-olive/10 flex items-center justify-center">
+              <svg class="w-3 h-3 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div class="text-[14px] text-ink/80 leading-relaxed"><strong class="font-semibold text-ink">Eigenes Zentrallager</strong> · Dassanowskyweg 16a, 1220 Wien — kein Drittlager, keine versteckten Wege.</div>
+          </li>
+          <li class="reveal flex items-start gap-4" style="transition-delay:80ms">
+            <span class="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-olive/10 flex items-center justify-center">
+              <svg class="w-3 h-3 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div class="text-[14px] text-ink/80 leading-relaxed"><strong class="font-semibold text-ink">Lieferung innerhalb 24 Stunden</strong> nach Bestellung in der Alero App, Wien und Umgebung.</div>
+          </li>
+          <li class="reveal flex items-start gap-4" style="transition-delay:160ms">
+            <span class="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-olive/10 flex items-center justify-center">
+              <svg class="w-3 h-3 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div class="text-[14px] text-ink/80 leading-relaxed"><strong class="font-semibold text-ink">B2B-Sortiment</strong> · Restaurants, Hotels, Catering, Imbisse — Großgebinde und Profi-Mengen.</div>
+          </li>
+        </ul>
+
+        <a href="#" class="inline-flex items-center gap-3 text-olive hover:text-ink transition font-semibold text-[14px] border-b-2 border-olive hover:border-ink pb-1">
+          Mehr über uns erfahren
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 md:gap-8 mt-12 pt-10 border-t border-ink/10">
+          <div class="reveal">
+            <div class="font-display font-bold text-[44px] md:text-[56px] text-olive leading-none tabular">15<span class="text-2xl align-top">+</span></div>
+            <div class="text-[11px] uppercase tracking-[0.15em] text-ink/50 mt-2 font-semibold">Jahre Erfahrung</div>
+          </div>
+          <div class="reveal" style="transition-delay:100ms">
+            <div class="font-display font-bold text-[44px] md:text-[56px] text-olive leading-none tabular">200<span class="text-2xl align-top">+</span></div>
+            <div class="text-[11px] uppercase tracking-[0.15em] text-ink/50 mt-2 font-semibold">Kunden in Wien</div>
+          </div>
+          <div class="reveal" style="transition-delay:200ms">
+            <div class="font-display font-bold text-[44px] md:text-[56px] text-olive leading-none tabular">8</div>
+            <div class="text-[11px] uppercase tracking-[0.15em] text-ink/50 mt-2 font-semibold">Produktbereiche</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     6. PARTNERS (marquee)
+════════════════════════════════════════════ -->
+<section class="bg-paper border-y border-line/60 py-10 overflow-hidden">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 flex items-center gap-10">
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <span class="w-8 h-px bg-olive"></span>
+      <span class="text-[10px] uppercase tracking-[0.25em] text-ink/40 font-semibold whitespace-nowrap">Unsere Partner</span>
+    </div>
+    <div class="flex-1 overflow-hidden relative" style="mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);">
+      <div class="marquee-track flex items-center gap-16 whitespace-nowrap" style="width: max-content;">
+        <!-- partner placeholders ×2 for seamless loop -->
+        <span class="font-display font-semibold text-2xl text-ink/30 tracking-wider">FROST&amp;CO</span>
+        <span class="font-serif italic text-2xl text-ink/30">Vinarius</span>
+        <span class="font-display font-bold text-2xl text-ink/30">PACKLINE</span>
+        <span class="font-display text-2xl text-ink/30 tracking-[0.2em]">HORECA</span>
+        <span class="font-serif text-2xl text-ink/30 font-medium">Olivenhof</span>
+        <span class="font-display font-semibold text-2xl text-ink/30">KÜCHENPRO</span>
+        <span class="font-display font-semibold text-2xl text-ink/30 tracking-wider">FROST&amp;CO</span>
+        <span class="font-serif italic text-2xl text-ink/30">Vinarius</span>
+        <span class="font-display font-bold text-2xl text-ink/30">PACKLINE</span>
+        <span class="font-display text-2xl text-ink/30 tracking-[0.2em]">HORECA</span>
+        <span class="font-serif text-2xl text-ink/30 font-medium">Olivenhof</span>
+        <span class="font-display font-semibold text-2xl text-ink/30">KÜCHENPRO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     7. REVIEWS
+════════════════════════════════════════════ -->
+<section class="bg-inkdeep grain relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(61,168,79,0.18) 0%, transparent 60%);"></div>
+
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28 relative z-10">
+
+    <header class="reveal text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-3 mb-5">
+        <span class="w-8 h-px bg-olive"></span>
+        <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Stimmen aus Wien</span>
+        <span class="w-8 h-px bg-olive"></span>
+      </div>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white leading-[1.05] mb-4">
+        Was unsere Kunden sagen
+      </h2>
+      <p class="text-white/45 text-[15px]">Stammkunden aus Wiener Restaurants und Catering-Betrieben — seit Jahren an unserer Seite.</p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <article class="reveal bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-sm p-8 md:p-10 relative">
+        <svg class="absolute top-6 right-6 w-12 h-12 text-olive/20" viewBox="0 0 32 32" fill="currentColor"><path d="M0 32V20.8C0 9.3 6 2.4 14 0l1.7 4.6c-5.3 1.6-8.4 5.7-8.4 9.6h6.7v17.8H0zm17.3 0V20.8C17.3 9.3 23.3 2.4 31.3 0L33 4.6c-5.3 1.6-8.4 5.7-8.4 9.6h6.7v17.8H17.3z"/></svg>
+
+        <div class="text-olive text-lg mb-5 tracking-wider">★★★★★</div>
+        <blockquote class="font-serif italic text-white text-[19px] md:text-[21px] leading-[1.55] mb-8">
+          „Wir arbeiten seit fünf Jahren mit Alero. Zuverlässige Lieferungen, immer pünktlich, und wenn mal etwas fehlt, wird es sofort geregelt. Das Beste: die App macht das Bestellen wirklich einfach."
+        </blockquote>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-olive to-[#1f5e2a] flex items-center justify-center font-display font-bold text-white text-base">MK</div>
+          <div>
+            <div class="text-white font-semibold text-[14px]">Michael K.</div>
+            <div class="text-white/45 text-[12px]">Inhaber · Restaurant Zur Linde, Wien</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="reveal bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-sm p-8 md:p-10 relative" style="transition-delay:120ms">
+        <svg class="absolute top-6 right-6 w-12 h-12 text-olive/20" viewBox="0 0 32 32" fill="currentColor"><path d="M0 32V20.8C0 9.3 6 2.4 14 0l1.7 4.6c-5.3 1.6-8.4 5.7-8.4 9.6h6.7v17.8H0zm17.3 0V20.8C17.3 9.3 23.3 2.4 31.3 0L33 4.6c-5.3 1.6-8.4 5.7-8.4 9.6h6.7v17.8H17.3z"/></svg>
+
+        <div class="text-olive text-lg mb-5 tracking-wider">★★★★★</div>
+        <blockquote class="font-serif italic text-white text-[19px] md:text-[21px] leading-[1.55] mb-8">
+          „Alero liefert uns regelmäßig Tiefkühlware und Öl. Kein Stress, kein Hin und Her — wir bestellen montags in der App, dienstags ist alles da. Das ist Verlässlichkeit."
+        </blockquote>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-olive to-[#1f5e2a] flex items-center justify-center font-display font-bold text-white text-base">AS</div>
+          <div>
+            <div class="text-white font-semibold text-[14px]">Anna S.</div>
+            <div class="text-white/45 text-[12px]">Operations · Catering Service Wien GmbH</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     8. TEAM
+════════════════════════════════════════════ -->
+<section class="bg-paper">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+
+    <header class="reveal max-w-2xl mb-14">
+      <div class="inline-flex items-center gap-2.5 mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-olive"></span>
+        <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Unser Team</span>
+      </div>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05] mb-3">
+        Ihre persönlichen Ansprechpartner
+      </h2>
+      <p class="text-ink/60 text-[15px]">Keine Hotline, keine Wartezeiten — Sie sprechen direkt mit den Menschen, die Ihre Bestellung kennen.</p>
+    </header>
+
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden">
+        <div class="aspect-[4/3] relative overflow-hidden" style="background: linear-gradient(135deg, #f3dcb5 0%, #6dc878 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="font-display font-bold text-white text-[120px] opacity-30 leading-none">MH</span>
+          </div>
+          <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-sm text-[10px] uppercase tracking-wider font-semibold text-ink">Geschäftsführer</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-display font-bold text-xl text-ink mb-1">Michael H.</h3>
+          <p class="text-[13px] text-ink/55 mb-4">Strategie, Partnerschaften, Verträge</p>
+          <a href="mailto:michael@alero.at" class="text-[12px] font-semibold text-olive hover:text-ink transition flex items-center gap-1.5">
+            michael@alero.at →
+          </a>
+        </div>
+      </article>
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden" style="transition-delay:100ms">
+        <div class="aspect-[4/3] relative overflow-hidden" style="background: linear-gradient(135deg, #c8e0f5 0%, #6a8fb8 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="font-display font-bold text-white text-[120px] opacity-30 leading-none">AK</span>
+          </div>
+          <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-sm text-[10px] uppercase tracking-wider font-semibold text-ink">Kundenbetreuung</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-display font-bold text-xl text-ink mb-1">Anna K.</h3>
+          <p class="text-[13px] text-ink/55 mb-4">Erste Ansprechpartnerin für Neu- und Stammkunden</p>
+          <a href="mailto:anna@alero.at" class="text-[12px] font-semibold text-olive hover:text-ink transition flex items-center gap-1.5">
+            anna@alero.at →
+          </a>
+        </div>
+      </article>
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden" style="transition-delay:200ms">
+        <div class="aspect-[4/3] relative overflow-hidden" style="background: linear-gradient(135deg, #c8ead9 0%, #5a8a72 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="font-display font-bold text-white text-[120px] opacity-30 leading-none">TW</span>
+          </div>
+          <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-sm text-[10px] uppercase tracking-wider font-semibold text-ink">Logistik &amp; Lager</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-display font-bold text-xl text-ink mb-1">Thomas W.</h3>
+          <p class="text-[13px] text-ink/55 mb-4">Bestellungen, Lieferplanung, Lagerbestand</p>
+          <a href="mailto:thomas@alero.at" class="text-[12px] font-semibold text-olive hover:text-ink transition flex items-center gap-1.5">
+            thomas@alero.at →
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     9. AKTIONEN & NEWS
+════════════════════════════════════════════ -->
+<section id="aktionen" class="bg-[#efeae0]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+
+    <header class="reveal flex flex-wrap items-end justify-between gap-6 mb-14">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Aktionen &amp; Neuigkeiten</span>
+        </div>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05]">
+          Sonderangebote, neue Produkte und nützliche Tipps für Ihren Betrieb
+        </h2>
+      </div>
+      <a href="#" class="text-olive hover:text-ink transition font-semibold text-[14px] border-b-2 border-olive hover:border-ink pb-1 flex items-center gap-2">
+        Alle Beiträge ansehen →
+      </a>
+    </header>
+
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden flex flex-col">
+        <div class="aspect-[3/2] relative overflow-hidden" style="background: linear-gradient(135deg, #c8e0f5 0%, #6a8fb8 50%, #2e4a66 100%);">
+          <div class="absolute inset-0 flex items-center justify-center text-[80px] opacity-50">❄</div>
+          <span class="absolute top-3 left-3 bg-olive text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm">Aktion</span>
+          <span class="absolute bottom-3 right-3 bg-white/90 backdrop-blur text-ink font-display font-bold px-3 py-1 text-base">−20%</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="text-[11px] uppercase tracking-[0.15em] text-ink/40 font-semibold mb-3">April 2026</div>
+          <h3 class="font-display font-bold text-xl text-ink leading-tight mb-3 flex-1">Tiefkühlprodukte bis −20% — Frühlingsangebot bis Ende April</h3>
+          <span class="text-[12px] font-semibold text-olive">Weiterlesen →</span>
+        </div>
+      </article>
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden flex flex-col" style="transition-delay:100ms">
+        <div class="aspect-[3/2] relative overflow-hidden" style="background: linear-gradient(135deg, #f3dcb5 0%, #6dc878 50%, #1f5e2a 100%);">
+          <div class="absolute inset-0 flex items-center justify-center text-[80px] opacity-50">🌻</div>
+          <span class="absolute top-3 left-3 bg-ink text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm">Sortiment</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="text-[11px] uppercase tracking-[0.15em] text-ink/40 font-semibold mb-3">März 2026</div>
+          <h3 class="font-display font-bold text-xl text-ink leading-tight mb-3 flex-1">Neues Sonnenblumenöl im Sortiment: drei Gebindegrößen für Gastronomie</h3>
+          <span class="text-[12px] font-semibold text-olive">Weiterlesen →</span>
+        </div>
+      </article>
+
+      <article class="reveal group bg-white border border-line rounded-sm overflow-hidden flex flex-col" style="transition-delay:200ms">
+        <div class="aspect-[3/2] relative overflow-hidden" style="background: linear-gradient(135deg, #c8ead9 0%, #5a8a72 50%, #2e4a3a 100%);">
+          <div class="absolute inset-0 flex items-center justify-center text-[80px] opacity-50">📦</div>
+          <span class="absolute top-3 left-3 bg-white text-ink text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm">Tipps</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="text-[11px] uppercase tracking-[0.15em] text-ink/40 font-semibold mb-3">Februar 2026</div>
+          <h3 class="font-display font-bold text-xl text-ink leading-tight mb-3 flex-1">Wie lagert man Tiefkühlprodukte richtig? Tipps für Restaurantküchen</h3>
+          <span class="text-[12px] font-semibold text-olive">Weiterlesen →</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     10. APP BLOCK
+════════════════════════════════════════════ -->
+<section id="app" class="relative overflow-hidden" style="background: linear-gradient(135deg, #3DA84F 0%, #1f5e2a 100%);">
+  <!-- decorative pattern -->
+  <div class="absolute inset-0 opacity-[0.08] pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 32px 32px;"></div>
+
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-24 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+
+    <div class="reveal">
+      <div class="inline-flex items-center gap-2.5 mb-5 text-white">
+        <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+        <span class="text-[11px] uppercase tracking-[0.25em] font-semibold">Alero Mobile App</span>
+      </div>
+      <h2 class="font-display font-bold text-white text-4xl md:text-[56px] leading-[1.02] mb-6">
+        Bestellen Sie in<br>
+        <span class="font-serif italic font-normal">wenigen Klicks</span>
+      </h2>
+      <p class="text-white/85 text-[16px] leading-relaxed mb-9 max-w-[48ch]">
+        Vollständiger Katalog, Bestellhistorie, Lieferverfolgung und schnelles Nachbestellen Ihrer Standardartikel — alles in der Alero App für iOS und Android.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="#" class="group bg-ink hover:bg-inkdeep transition text-white px-5 py-3 rounded-sm flex items-center gap-3">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="text-left">
+            <div class="text-[10px] uppercase tracking-wider opacity-70">Download im</div>
+            <div class="font-semibold text-base leading-tight">App Store</div>
+          </div>
+        </a>
+        <a href="#" class="group bg-ink hover:bg-inkdeep transition text-white px-5 py-3 rounded-sm flex items-center gap-3">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.18l12.45-7.2-2.63-2.63-10.81 9.65zm-1.97-20.8C.84 3.4.5 3.9.5 4.56v14.88c0 .66.34 1.16.71 1.6l.08.08 8.34-8.34v-.2L1.21 2.96zm17.54 8.04l-2.49-1.44-2.92 2.92 2.92 2.92 2.51-1.45c.72-.41.72-1.54-.02-1.95zM4.17.25l12.45 7.2-2.63 2.63L3.18.43C3.48.26 3.87.08 4.17.25z"/></svg>
+          <div class="text-left">
+            <div class="text-[10px] uppercase tracking-wider opacity-70">Erhältlich bei</div>
+            <div class="font-semibold text-base leading-tight">Google Play</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Phone mockups -->
+    <div class="reveal flex justify-center lg:justify-end gap-4 md:gap-6">
+      <!-- back phone -->
+      <div class="w-44 md:w-52 aspect-[9/19] bg-inkdeep rounded-[28px] p-2 shadow-2xl transform -rotate-6 translate-y-4">
+        <div class="w-full h-full rounded-[22px] bg-gradient-to-br from-ink to-inkdeep relative overflow-hidden flex items-center justify-center">
+          <span class="font-display font-bold text-olive text-3xl tracking-[0.2em]">ALERO</span>
+          <div class="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-inkdeep rounded-full"></div>
+        </div>
+      </div>
+      <!-- front phone -->
+      <div class="w-44 md:w-52 aspect-[9/19] bg-inkdeep rounded-[28px] p-2 shadow-2xl transform rotate-3 -translate-y-2">
+        <div class="w-full h-full rounded-[22px] bg-paper relative overflow-hidden flex flex-col">
+          <div class="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-inkdeep rounded-full z-10"></div>
+          <div class="pt-10 px-4 pb-4">
+            <div class="text-[8px] uppercase tracking-widest text-ink/40 mb-1">Mein Katalog</div>
+            <div class="font-display font-bold text-ink text-sm mb-3">Hallo, Michael 👋</div>
+            <div class="space-y-2">
+              <div class="bg-white border border-line rounded p-2 flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-cream flex items-center justify-center text-sm">❄</div>
+                <div class="flex-1">
+                  <div class="text-[8px] font-semibold text-ink">Tiefkühl</div>
+                  <div class="text-[7px] text-ink/40">240 Artikel</div>
+                </div>
+                <div class="text-olive text-[10px] font-bold">−20%</div>
+              </div>
+              <div class="bg-white border border-line rounded p-2 flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-cream flex items-center justify-center text-sm">🌻</div>
+                <div class="flex-1">
+                  <div class="text-[8px] font-semibold text-ink">Öle</div>
+                  <div class="text-[7px] text-ink/40">38 Artikel</div>
+                </div>
+              </div>
+              <div class="bg-white border border-line rounded p-2 flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-cream flex items-center justify-center text-sm">📋</div>
+                <div class="flex-1">
+                  <div class="text-[8px] font-semibold text-ink">Verpackung</div>
+                  <div class="text-[7px] text-ink/40">156 Artikel</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 bg-olive rounded p-2 text-center">
+              <div class="text-[8px] text-white/80 uppercase tracking-wider">Schnellbestellung</div>
+              <div class="text-[9px] font-bold text-white">12 Artikel im Warenkorb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     11. FOOTER
+════════════════════════════════════════════ -->
+<footer id="kontakt" class="bg-inkdeep text-white">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 pt-20 pb-10">
+
+    <div class="grid md:grid-cols-12 gap-10 md:gap-8 pb-14 border-b border-white/10">
+
+      <!-- Brand & address -->
+      <div class="md:col-span-5">
+        <div class="mb-6">
+          <img src="data:image/png;base64,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" alt="Alero Handels GmbH" class="h-14 w-auto" width="183" height="94">
+        </div>
+        <address class="not-italic text-white/65 text-[14px] leading-[1.85]">
+          Dassanowskyweg 16a<br>
+          1220 Wien, Österreich<br>
+          <a href="tel:+431748952" class="text-olive hover:text-leaf transition tabular">+43 1 748 95 20</a><br>
+          <a href="mailto:office@alero.at" class="text-olive hover:text-leaf transition">office@alero.at</a>
+        </address>
+        <div class="mt-6 inline-flex flex-col gap-1 text-[12px] text-white/50">
+          <div class="flex items-center gap-3">
+            <span class="text-white/70 font-semibold">Mo–Do</span>
+            <span class="tabular">8:00 – 17:00</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-white/70 font-semibold">Freitag</span>
+            <span class="tabular">8:00 – 16:00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="md:col-span-3">
+        <div class="text-[11px] uppercase tracking-[0.2em] text-olive font-semibold mb-5">Navigation</div>
+        <ul class="space-y-2.5 text-[14px]">
+          <li><a href="#" class="text-white/65 hover:text-white transition">Startseite</a></li>
+          <li><a href="#ueber-uns" class="text-white/65 hover:text-white transition">Über uns</a></li>
+          <li><a href="#produkte" class="text-white/65 hover:text-white transition">Produkte</a></li>
+          <li><a href="#aktionen" class="text-white/65 hover:text-white transition">Aktionen</a></li>
+          <li><a href="#kontakt" class="text-white/65 hover:text-white transition">Kontakt</a></li>
+        </ul>
+      </div>
+
+      <!-- App -->
+      <div class="md:col-span-4">
+        <div class="text-[11px] uppercase tracking-[0.2em] text-olive font-semibold mb-5">App herunterladen</div>
+        <div class="flex flex-col gap-2.5">
+          <a href="#" class="bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 rounded-sm px-4 py-3 flex items-center gap-3 transition">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="text-[13px] text-white/85">App Store · iOS</span>
+          </a>
+          <a href="#" class="bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 rounded-sm px-4 py-3 flex items-center gap-3 transition">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.18l12.45-7.2-2.63-2.63-10.81 9.65zm-1.97-20.8C.84 3.4.5 3.9.5 4.56v14.88c0 .66.34 1.16.71 1.6l.08.08 8.34-8.34v-.2L1.21 2.96zm17.54 8.04l-2.49-1.44-2.92 2.92 2.92 2.92 2.51-1.45c.72-.41.72-1.54-.02-1.95zM4.17.25l12.45 7.2-2.63 2.63L3.18.43C3.48.26 3.87.08 4.17.25z"/></svg>
+            <span class="text-[13px] text-white/85">Google Play · Android</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-4 pt-8 text-[12px] text-white/40">
+      <div>© 2026 Alero Handels GmbH · Alle Rechte vorbehalten</div>
+      <div class="flex items-center gap-6">
+        <a href="#" class="hover:text-white transition">Impressum</a>
+        <a href="#" class="hover:text-white transition">Datenschutzerklärung</a>
+        <a href="#" class="hover:text-white transition">AGB</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════
+     STICKY BOTTOM BANNER
+════════════════════════════════════════════ -->
+<div id="sticky-banner" class="sticky-banner fixed bottom-0 left-0 right-0 bg-olive text-white z-30 shadow-2xl">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-3 flex items-center justify-between gap-4">
+    <div class="text-[13px] flex items-center gap-3">
+      <span class="hidden md:inline-flex w-2 h-2 rounded-full bg-white animate-pulse"></span>
+      <span><strong class="font-semibold">Frühlingsangebot:</strong> Tiefkühlprodukte bis −20% — bis 30. April in der App</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="#app" class="bg-white text-olive font-semibold px-4 py-1.5 rounded-sm text-[12px] hover:bg-ink hover:text-white transition whitespace-nowrap">App öffnen →</a>
+      <button id="sticky-close" class="text-white/70 hover:text-white text-xl leading-none" aria-label="Schließen">×</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
+<script>
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  // ── Hero slider data ──
+  // Slide 0 — Aktion (variable, monthly): change copy & ghost as needed
+  // Slides 1-3 — permanent: Öl (branded), Grillen (seasonal), Tiefkühl-Klassiker
+  const slidesData = [
+    { tag: 'Aktion &middot; Tiefk&uuml;hl &middot; sofort lieferbar', titleA: 'Tiefk&uuml;hlprodukte', titleB: 'f&uuml;r Gastro & Handel', desc: 'Pommes, Wedges und weitere Tiefk&uuml;hl-Klassiker f&uuml;r die professionelle K&uuml;che. Bestellen Sie schnell und planbar in der Alero App.', cta: 'Tiefk&uuml;hl in der App ansehen', ghost: '01', bannerImage: 'assets/tiefkuehl-produkte.png' },
+    { tag: 'Eigenmarke &middot; Sonnenblumen&ouml;l', titleA: 'Alero Sonnenblumen&ouml;l', titleB: 'f&uuml;r die Profik&uuml;che', desc: 'Sonnenblumen&ouml;l unter eigener Marke in praktischen Gebindegr&ouml;&szlig;en. Verl&auml;sslich verf&uuml;gbar f&uuml;r Gastronomie, Catering und Handel.', cta: 'Zum &Ouml;l-Sortiment', ghost: '02', bannerImage: 'assets/sonnenblumenoel.png' },
+    { tag: 'Saison &middot; Grillen & Holzkohle', titleA: 'Grillen, Holzkohle', titleB: 'und Brennholz', desc: 'Holzkohle, Grillzubeh&ouml;r und Brennholz f&uuml;r Gastronomie und Sommergesch&auml;ft. Direkt aus dem Lager in Wien verf&uuml;gbar.', cta: 'Grillsortiment ansehen', ghost: '03', bannerImage: 'assets/grillen-holzkohle.png' },
+    { tag: 'Klassiker &middot; Snacks & Beilagen', titleA: 'Nuggets, Wedges', titleB: 'Onion Rings & Co.', desc: 'Friteusenfertige Klassiker f&uuml;r schnelle Abl&auml;ufe: Snacks, Beilagen und Fingerfood in gro&szlig;en Gebinden f&uuml;r Profik&uuml;chen.', cta: 'Snacks in der App ansehen', ghost: '04', bannerImage: 'assets/nuggets-wedges-onion-rings.png' },
+  ];
+
+  let current = 0;
+  let timer = null;
+  const slidesContainer = document.getElementById('slides');
+  const slideCurrent = document.getElementById('slide-current');
+  const inds = document.querySelectorAll('.slide-ind');
+  const ghostEl = document.querySelector('.hero-ghost-num');
+  const heroBannerImage = document.getElementById('hero-banner-image');
+
+  function setHeroImage(src) {
+    if (!heroBannerImage || heroBannerImage.getAttribute('src') === src) return;
+    heroBannerImage.classList.add('is-changing');
+    window.setTimeout(() => { heroBannerImage.src = src; heroBannerImage.classList.remove('is-changing'); }, 220);
+  }
+
+  function renderSlide(i) {
+    const s = slidesData[i];
+    setHeroImage(s.bannerImage);
+    slidesContainer.innerHTML = `
+      <article class="slide relative max-w-[760px]" data-slide="${i}" style="opacity:0; transform:translateY(12px); transition:opacity .6s, transform .6s;">
+        <div class="inline-flex items-center gap-2.5 bg-olive/20 border border-olive/40 text-olive text-[11px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-sm mb-6 backdrop-blur-sm">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-olive animate-pulse"></span>${s.tag}
+        </div>
+        <h1 class="font-display font-bold text-white text-[54px] md:text-[82px] leading-[0.92] tracking-[-0.01em] max-w-[15ch] mb-7 relative z-10">${s.titleA}<br><span class="text-olive">${s.titleB}</span></h1>
+        <p class="font-serif italic text-white/72 text-[17px] md:text-[20px] leading-relaxed max-w-[44ch] mb-10 relative z-10">${s.desc}</p>
+        <div class="flex flex-wrap items-center gap-4 relative z-10">
+          <a href="#app" class="group bg-olive hover:bg-leaf transition text-white font-semibold px-7 py-4 rounded-sm flex items-center gap-3 text-[14px]">${s.cta}<svg class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a href="#produkte" class="text-white/80 hover:text-white text-[13px] font-medium tracking-wide flex items-center gap-2 border-b border-white/25 hover:border-white/70 pb-1 transition">Sortiment ansehen</a>
+        </div>
+      </article>`;
+    requestAnimationFrame(() => { const a = slidesContainer.querySelector('.slide'); a.style.opacity = '1'; a.style.transform = 'translateY(0)'; });
+    ghostEl.textContent = s.ghost;
+    inds.forEach((ind, idx) => { ind.style.width = idx === i ? '64px' : '40px'; ind.style.background = idx === i ? '#3DA84F' : 'rgba(255,255,255,0.18)'; });
+    slideCurrent.textContent = String(i + 1).padStart(2, '0');
+  }
+
+  function go(i) { current = ((i % slidesData.length) + slidesData.length) % slidesData.length; renderSlide(current); resetTimer(); }
+  function resetTimer() { if (timer) clearInterval(timer); timer = setInterval(() => go(current + 1), 6500); }
+  document.querySelectorAll('.slide-btn').forEach(btn => btn.addEventListener('click', () => go(parseInt(btn.dataset.go, 10))));
+  renderSlide(0);
+  resetTimer();
+
+  // Sticky banner close
+  const banner = document.getElementById('sticky-banner');
+  const bannerClose = document.getElementById('sticky-close');
+  bannerClose.addEventListener('click', () => banner.classList.add('hide'));
+</script>
+
+</body>
+</html>
