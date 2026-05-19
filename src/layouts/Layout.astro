@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, ogImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="de-AT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_AT" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Canonical -->
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Per-page head injection (JSON-LD, page-specific meta) -->
+    <slot name="head" />
+  </head>
+  <body class="bg-paper text-ink">
+    <slot />
+  </body>
+</html>
