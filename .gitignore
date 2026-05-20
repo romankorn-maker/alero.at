@@ -12,3 +12,5 @@ Thumbs.db
 /hosting-static/
 /index.html
 /vite.config.js
+.claude/
+assets-backup/
