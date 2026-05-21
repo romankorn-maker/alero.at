@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 import html from '../raw/index.html?raw';
 ---
 <Layout
   title="Alero Handels GmbH — Lebensmittel & Verpackung für Gastronomie in Wien"
   description="Seit 2009 beliefert Alero Restaurants, Hotels und Catering in Wien. Tiefkühlprodukte, Öle, Verpackung und Hygiene — bestellen Sie bequem in unserer App."
 >
+  <Header currentPath="/" />
   <Fragment set:html={html} />
 </Layout>
