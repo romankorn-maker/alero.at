@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StickyBanner from '../components/StickyBanner.astro';
 import html from '../raw/index.html?raw';
 ---
 <Layout
@@ -11,4 +12,8 @@ import html from '../raw/index.html?raw';
   <Header currentPath="/" />
   <Fragment set:html={html} />
   <Footer />
+  <StickyBanner
+    prefix="Frühlingsangebot:"
+    message="Tiefkühlprodukte bis −20% — bis 30. April in der App"
+  />
 </Layout>
