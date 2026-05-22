@@ -6,6 +6,7 @@ import StickyBanner from '../components/StickyBanner.astro';
 import AppPromo from '../components/AppPromo.astro';
 import News from '../components/News.astro';
 import Team from '../components/Team.astro';
+import Reviews from '../components/Reviews.astro';
 import html from '../raw/index.html?raw';
 ---
 <Layout
@@ -14,6 +15,7 @@ import html from '../raw/index.html?raw';
 >
   <Header currentPath="/" />
   <Fragment set:html={html} />
+  <Reviews />
   <Team />
   <News />
   <AppPromo />
