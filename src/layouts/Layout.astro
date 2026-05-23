@@ -1,16 +1,26 @@
 ---
 import '../styles/global.css';
-
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBanner from '../components/StickyBanner.astro';
 interface Props {
   title: string;
   description: string;
   canonical?: string;
   ogImage?: string;
+  bannerPrefix?: string;
+  bannerMessage?: string;
 }
-
-const { title, description, canonical, ogImage } = Astro.props;
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  bannerPrefix = 'Frühlingsangebot:',
+  bannerMessage = 'Tiefkühlprodukte bis −20% — bis 30. April in der App',
+} = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
-
 <!doctype html>
 <html lang="de-AT">
   <head>
@@ -18,45 +28,37 @@ const { title, description, canonical, ogImage } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-
-    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-
-    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_AT" />
     {ogImage && <meta property="og:image" content={ogImage} />}
-
-    <!-- Canonical -->
     {canonical && <link rel="canonical" href={canonical} />}
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Per-page head injection (JSON-LD, page-specific meta) -->
     <slot name="head" />
   </head>
   <body class="bg-paper text-ink">
+    <Header currentPath={currentPath} />
     <slot />
+    <Footer />
+    <StickyBanner prefix={bannerPrefix} message={bannerMessage} />
     <script>
-      // Reveal on scroll — global for all pages
-      const reveals = document.querySelectorAll('.reveal');
+      const reveals = document.querySelectorAll(".reveal");
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add('in');
+            e.target.classList.add("in");
             io.unobserve(e.target);
           }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
       reveals.forEach((el) => io.observe(el));
     </script>
   </body>

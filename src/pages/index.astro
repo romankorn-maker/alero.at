@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import About from '../components/About.astro';
@@ -9,14 +8,11 @@ import Reviews from '../components/Reviews.astro';
 import Team from '../components/Team.astro';
 import News from '../components/News.astro';
 import AppPromo from '../components/AppPromo.astro';
-import Footer from '../components/Footer.astro';
-import StickyBanner from '../components/StickyBanner.astro';
 ---
 <Layout
   title="Alero Handels GmbH — Lebensmittel & Verpackung für Gastronomie in Wien"
   description="Seit 2009 beliefert Alero Restaurants, Hotels und Catering in Wien. Tiefkühlprodukte, Öle, Verpackung und Hygiene — bestellen Sie bequem in unserer App."
 >
-  <Header currentPath="/" />
   <Hero />
   <ProductGrid />
   <About />
@@ -25,9 +21,4 @@ import StickyBanner from '../components/StickyBanner.astro';
   <Team />
   <News />
   <AppPromo />
-  <Footer />
-  <StickyBanner
-    prefix="Frühlingsangebot:"
-    message="Tiefkühlprodukte bis −20% — bis 30. April in der App"
-  />
 </Layout>
