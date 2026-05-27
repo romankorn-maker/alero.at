@@ -14,3 +14,5 @@ Thumbs.db
 /vite.config.js
 .claude/
 assets-backup/
+dist-deploy.zip
+*.zip
