@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 
 // ── Web3Forms ──────────────────────────────────────────────────────────
 // Static-site form backend. Get a free key at https://web3forms.com
-// (tie it to office@alero.at) and paste it below. Until then the form
+// (tie it to info@alero.at) and paste it below. Until then the form
 // renders fine but submissions return an error.
 const WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
 
@@ -16,7 +16,7 @@ const labelBase =
 
 <Layout
   title="Kontakt — Alero Handels GmbH | Großhandel Wien"
-  description="Kontaktieren Sie Alero Handels GmbH in Wien: Schreiben Sie uns, rufen Sie an unter +43 1 748 95 20 oder bestellen Sie direkt in der Alero App. Mo–Fr erreichbar."
+  description="Kontaktieren Sie Alero Handels GmbH in Wien: Schreiben Sie uns, rufen Sie an unter +43 676 5946200 oder bestellen Sie direkt in der Alero App. Mo–Fr erreichbar."
   canonical="https://alero.at/kontakt"
 >
   <PageHeader
@@ -125,7 +125,7 @@ const labelBase =
               </div>
               <div id="form-error" class="hidden rounded-sm bg-[#faece7] border border-[#f3d4c8] px-5 py-4 text-[14px] text-ink">
                 Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an unter
-                <a href="tel:+4317489520" class="text-olive font-semibold">+43 1 748 95 20</a>.
+                <a href="tel:+436765946200" class="text-olive font-semibold">+43 676 5946200</a>.
               </div>
             </form>
           </div>
@@ -150,8 +150,8 @@ const labelBase =
               <div>
                 <div class="text-[11px] uppercase tracking-[0.16em] text-white/40 font-semibold mb-2">Telefon &amp; E-Mail</div>
                 <div class="flex flex-col gap-1.5">
-                  <a href="tel:+4317489520" class="text-olive hover:text-leaf transition font-semibold tabular">+43 1 748 95 20</a>
-                  <a href="mailto:office@alero.at" class="text-olive hover:text-leaf transition">office@alero.at</a>
+                  <a href="tel:+436765946200" class="text-olive hover:text-leaf transition font-semibold tabular">+43 676 5946200</a>
+                  <a href="mailto:info@alero.at" class="text-olive hover:text-leaf transition">info@alero.at</a>
                 </div>
               </div>
 
@@ -166,7 +166,7 @@ const labelBase =
           </div>
 
           <!-- Google Maps (DSGVO: click-to-load) -->
-          <div class="mt-6 rounded-sm overflow-hidden border border-line">
+          <div class="mt-6 rounded-sm overflow-hidden">
             <div id="map-placeholder" class="h-[220px] flex flex-col items-center justify-center text-center px-6">
               <svg class="w-7 h-7 text-olive mx-auto mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               <div class="font-display font-semibold text-ink text-[17px]">Dassanowskyweg 16a, 1220 Wien</div>
@@ -200,11 +200,11 @@ const labelBase =
           </p>
           <div class="text-[12px] uppercase tracking-[0.16em] text-ink/40 mt-5">Mo–Do 8–17 · Fr 8–16</div>
         </div>
-        <a href="tel:+4317489520" class="group flex-shrink-0 inline-flex items-center gap-3.5 bg-olive hover:bg-leaf transition text-white font-semibold px-8 py-5 rounded-sm shadow-card-hover">
+        <a href="tel:+436765946200" class="group flex-shrink-0 inline-flex items-center gap-3.5 bg-olive hover:bg-leaf transition text-white font-semibold px-8 py-5 rounded-sm shadow-card-hover">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           <span class="flex flex-col leading-tight">
             <span class="text-[11px] uppercase tracking-[0.16em] text-white/70 font-medium">Jetzt anrufen</span>
-            <span class="text-[19px] tabular">+43 1 748 95 20</span>
+            <span class="text-[19px] tabular">+43 676 5946200</span>
           </span>
         </a>
       </div>
@@ -217,8 +217,8 @@ const labelBase =
     '@type': 'LocalBusiness',
     name: 'Alero Handels GmbH',
     image: 'https://alero.at/assets/alero-logo-white.png',
-    telephone: '+43 1 7489520',
-    email: 'office@alero.at',
+    telephone: '+43 676 5946200',
+    email: 'info@alero.at',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Dassanowskyweg 16a',

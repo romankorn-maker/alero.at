@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Layout
+  title="AGB — Alero Handels GmbH"
+  description="Allgemeine Geschäftsbedingungen der ALERO Handels GmbH für Lieferungen und Leistungen im Geschäftsverkehr."
+  canonical="https://alero.at/agb"
+>
+  <PageHeader
+    title="AGB"
+    subtitle="Allgemeine Geschäftsbedingungen der ALERO Handels GmbH für den Geschäftsverkehr mit Unternehmern."
+    crumbs={[{ label: 'Startseite', href: '/' }, { label: 'AGB' }]}
+  />
+
+  <section class="bg-paper">
+    <div class="max-w-[820px] mx-auto px-6 md:px-8 py-16 md:py-24">
+
+      <!-- Internal note: remove before publishing, after legal review -->
+      <div class="mb-12 rounded-sm border border-olive/30 bg-olive/5 px-6 py-5">
+        <p class="text-[13px] text-ink/70 leading-relaxed">
+          <strong class="text-ink font-semibold">Hinweis (intern):</strong> Dieser Entwurf dient als Gerüst.
+          Allgemeine Geschäftsbedingungen sind rechtlich bindend und sollten vor Veröffentlichung
+          durch eine Rechtsberatung bzw. die Wirtschaftskammer geprüft und an die tatsächlichen
+          Geschäftsabläufe angepasst werden.
+        </p>
+      </div>
+
+      <div class="legal space-y-9 text-ink/75 text-[15px] leading-[1.8]">
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">1. Geltungsbereich</h2>
+          <p>
+            Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Lieferungen und Leistungen der ALERO Handels GmbH (nachfolgend „Verkäufer") gegenüber Unternehmern im Sinne des § 1 UGB. Entgegenstehende oder abweichende Bedingungen des Kunden werden nur anerkannt, wenn der Verkäufer ihnen ausdrücklich schriftlich zustimmt.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">2. Vertragsabschluss und Bestellung</h2>
+          <p>
+            Bestellungen erfolgen über die Alero App, telefonisch oder per E-Mail. Die Darstellung des Sortiments stellt kein verbindliches Angebot dar. Ein Vertrag kommt erst mit Auftragsbestätigung oder Auslieferung durch den Verkäufer zustande.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">3. Preise</h2>
+          <p>
+            Es gelten die zum Zeitpunkt der Bestellung in der Alero App ausgewiesenen Preise. Preise verstehen sich, sofern nicht anders angegeben, zuzüglich der gesetzlichen Umsatzsteuer.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">4. Lieferung</h2>
+          <p>
+            Lieferungen erfolgen im Liefergebiet Wien und Umgebung. Liefertermine und -fristen sind unverbindlich, sofern sie nicht ausdrücklich als verbindlich vereinbart wurden. Teillieferungen sind zulässig, soweit dies für den Kunden zumutbar ist.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">5. Zahlungsbedingungen</h2>
+          <p>
+            Die Zahlungsbedingungen werden individuell vereinbart. Sofern nicht anders vereinbart, sind Rechnungen ohne Abzug zur Zahlung fällig. Bei Zahlungsverzug gelten die gesetzlichen Bestimmungen.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">6. Eigentumsvorbehalt</h2>
+          <p>
+            Die gelieferte Ware bleibt bis zur vollständigen Bezahlung im Eigentum des Verkäufers.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">7. Gewährleistung und Mängelrüge</h2>
+          <p>
+            Der Kunde hat die Ware unverzüglich nach Erhalt zu prüfen und erkennbare Mängel umgehend schriftlich zu rügen. Im Übrigen gelten die gesetzlichen Gewährleistungsbestimmungen für den unternehmerischen Geschäftsverkehr.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">8. Haftung</h2>
+          <p>
+            Der Verkäufer haftet für Schäden nur bei Vorsatz oder grober Fahrlässigkeit. Die Haftung für leichte Fahrlässigkeit ist, soweit gesetzlich zulässig, ausgeschlossen. Die Bestimmungen des Produkthaftungsgesetzes bleiben unberührt.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">9. Gerichtsstand und anwendbares Recht</h2>
+          <p>
+            Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts. Gerichtsstand für alle Streitigkeiten ist das sachlich zuständige Gericht in Wien.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-bold text-ink text-lg mb-3">10. Schlussbestimmungen</h2>
+          <p>
+            Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt. An die Stelle der unwirksamen Bestimmung tritt eine Regelung, die dem wirtschaftlichen Zweck am nächsten kommt.
+          </p>
+        </div>
+
+        <p class="text-ink/40 text-[13px] pt-6 border-t border-line">Stand: Mai 2026 · © 2026 ALERO Handels GmbH</p>
+
+      </div>
+    </div>
+  </section>
+</Layout>
