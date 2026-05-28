@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CategoryIcon from '../components/CategoryIcon.astro';
+import { categories } from '../data/categories';
+---
+
+<Layout
+  title="Produkte — Alero Handels GmbH | Sortiment für die Gastronomie"
+  description="Das komplette Alero-Sortiment: Tiefkühlprodukte, Lebensmittel, Sonnenblumenöl, Grillen, Aluminium- und sonstige Verpackung, Tragetaschen sowie Hygiene & Reinigung. Vollständiger Katalog mit Preisen in der Alero App."
+  canonical="https://alero.at/produkte"
+>
+  <PageHeader
+    title="Produkte"
+    subtitle="Acht Sortimentsbereiche, ein Lieferant. Vom Tiefkühl-Klassiker bis zur Verpackung — alles aus einer Hand, geliefert in 24 Stunden aus unserem Zentrallager in Wien."
+    crumbs={[{ label: 'Startseite', href: '/' }, { label: 'Produkte' }]}
+  />
+
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+
+      <header class="reveal max-w-2xl mb-14">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-8 h-px bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Unser Sortiment</span>
+        </div>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05] mb-4">
+          Acht Bereiche. Ein Lieferant.
+        </h2>
+        <p class="text-ink/60 text-[15px] leading-relaxed">
+          Wählen Sie einen Bereich für Details. Der vollständige Katalog mit aktuellen Preisen und Verfügbarkeiten steht in der Alero App bereit.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {
+          categories.map((c, i) => (
+            <a
+              href={`/produkte/${c.slug}`}
+              class={`prod-card group reveal bg-white rounded-sm p-7 flex flex-col relative overflow-hidden ${c.highlight ? 'border-2 border-olive/30' : 'border border-line'}`}
+              style={`transition-delay:${(i % 4) * 60}ms`}
+            >
+              {c.badge && (
+                <div class="absolute top-3 right-3 bg-olive text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm">{c.badge}</div>
+              )}
+              <div class="flex items-start justify-between mb-7">
+                <div class={`w-16 h-16 rounded-sm bg-gradient-to-br ${c.iconBg} flex items-center justify-center text-ink/75`}>
+                  <CategoryIcon name={c.icon} class="w-9 h-9" />
+                </div>
+                <span class="font-display text-olive/40 text-sm tabular font-semibold">{c.number}</span>
+              </div>
+              <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">{c.name}</h3>
+              <p class="text-[13px] text-ink/55 leading-relaxed mb-5 flex-1">{c.short}</p>
+              <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+                Mehr erfahren <span class="prod-arrow inline-block">→</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- App callout under grid -->
+      <div id="app-callout" class="reveal mt-12 flex flex-wrap items-center justify-between gap-6 bg-ink rounded-sm p-6 md:p-8 relative overflow-hidden">
+        <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.04] pointer-events-none" style="background: radial-gradient(circle at center, #3DA84F 0%, transparent 60%);"></div>
+        <div class="relative z-10">
+          <div class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold mb-2">Vollständiger Katalog</div>
+          <div class="font-display font-bold text-white text-2xl md:text-[28px] leading-tight">Alle Produkte, Preise und Verfügbarkeiten in der App</div>
+        </div>
+        <a href="#app-download" class="relative z-10 bg-white text-ink hover:bg-olive hover:text-white transition font-semibold px-6 py-3.5 rounded-sm text-[13px] flex items-center gap-2 whitespace-nowrap">
+          App öffnen
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>

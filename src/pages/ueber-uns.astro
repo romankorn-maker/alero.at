@@ -1,0 +1,220 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import About from '../components/About.astro';
+
+const advantages = [
+  {
+    title: 'Lieferung innerhalb 24 Stunden',
+    text: 'Bestellung heute in der App — Lieferung morgen. Eigenes Lager in Wien, keine langen Wartezeiten.',
+    icon: 'truck',
+  },
+  {
+    title: 'Geprüfte Qualität',
+    text: 'Wir arbeiten ausschließlich mit zertifizierten Lieferanten. Lückenlose Qualitätskontrolle in der Lieferkette.',
+    icon: 'shield',
+  },
+  {
+    title: 'Persönlicher Ansprechpartner',
+    text: 'Jeder Kunde hat einen festen Kontakt bei uns. Kein Callcenter, kein Ticket-System — ein Mensch, der Ihren Betrieb kennt.',
+    icon: 'person',
+  },
+  {
+    title: 'Einfache Bestellung per App',
+    text: 'Vollständiger Katalog, Bestellhistorie, Lieferverfolgung — alles in der Alero App für iOS und Android.',
+    icon: 'phone',
+  },
+];
+
+const timeline = [
+  {
+    year: '2009',
+    title: 'Gründung in Wien',
+    text: 'Alero Handels GmbH wird gegründet — mit eigenem Zentrallager im 22. Wiener Gemeindebezirk.',
+  },
+  {
+    year: null,
+    title: 'Ausbau des Sortiments',
+    text: 'Das Angebot wächst von Tiefkühlware zu einem Vollsortiment für Gastronomie, Catering und Handel.',
+  },
+  {
+    year: null,
+    title: 'Eigenmarke alero',
+    text: 'Sonnenblumenöl unter eigener Marke ergänzt das Sortiment — verlässlich verfügbar in mehreren Gebinden.',
+  },
+  {
+    year: null,
+    title: 'Die Alero App',
+    text: 'Bestellungen wandern vom Telefon in die eigene App: Katalog, Bestellhistorie und Lieferverfolgung in einer Hand.',
+  },
+  {
+    year: '2026',
+    title: 'Neuer Webauftritt',
+    text: 'Ein neuer Online-Auftritt bündelt Sortiment, Informationen und App — und begleitet das weitere Wachstum.',
+  },
+];
+---
+
+<Layout
+  title="Über uns — Alero Handels GmbH | Großhandel Wien seit 2009"
+  description="Alero Handels GmbH ist seit 2009 Ihr Wiener Großhändler für Tiefkühlprodukte, Lebensmittel, Öl, Grillsortiment und Verpackung. Eigenes Zentrallager, Lieferung in 24 Stunden, persönlicher Kontakt."
+  canonical="https://alero.at/ueber-uns"
+>
+  <PageHeader
+    title="Über uns"
+    subtitle="Alero Handels GmbH — Ihr Partner für Lebensmittel und Verpackung in Wien. Seit über fünfzehn Jahren beliefern wir Restaurants, Catering-Betriebe und Einzelhändler — zuverlässig und pünktlich."
+    crumbs={[{ label: 'Startseite', href: '/' }, { label: 'Über uns' }]}
+    image="/assets/banner-about.webp"
+    imageAlt="Alero Sortiment für die Gastronomie: Feinkost, Oliven, Olivenöl und Backwaren"
+  />
+
+  <!-- Intro + warehouse photo + counters (reused core) -->
+  <About variant="page" />
+
+  <!-- ── MISSION ────────────────────────────────────────────────────── -->
+  <section class="bg-inkdeep text-white relative overflow-hidden">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28 relative z-10 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="reveal lg:col-span-4">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-8 h-px bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Unsere Mission</span>
+        </div>
+        <h2 class="font-display font-bold text-3xl md:text-[44px] leading-[1.05]">
+          Damit Ihre Küche <span class="font-serif italic font-normal text-leaf">nie stillsteht</span>
+        </h2>
+      </div>
+      <div class="reveal lg:col-span-8 lg:pt-3" style="transition-delay:100ms">
+        <p class="text-white/75 text-[17px] md:text-[19px] leading-[1.8] mb-7">
+          Wir wissen: in der Gastronomie gibt es keinen Spielraum für Lieferausfälle. Ein fehlendes Produkt kann den Tagesablauf einer ganzen Küche durcheinanderbringen. Deshalb ist Zuverlässigkeit für uns kein Versprechen — <strong class="text-white font-semibold">es ist unser tägliches Ziel.</strong>
+        </p>
+        <p class="text-white/60 text-[15px] md:text-[16px] leading-[1.8]">
+          Seit der Gründung arbeiten wir daran, die Bestellung so einfach wie möglich zu machen. Erst telefonisch, dann per E-Mail — und heute über unsere eigene mobile App, die speziell für unsere Kunden entwickelt wurde.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WARUM ALERO ────────────────────────────────────────────────── -->
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+      <header class="reveal max-w-2xl mb-14">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-8 h-px bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Warum Alero?</span>
+        </div>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05]">
+          Konkrete Vorteile für Ihren Betrieb
+        </h2>
+      </header>
+
+      <div class="grid sm:grid-cols-2 gap-4 md:gap-5">
+        {
+          advantages.map((a, i) => (
+            <div class="prod-card reveal bg-white border border-line rounded-sm p-7 md:p-8 flex flex-col" style={`transition-delay:${i * 70}ms`}>
+              <div class="w-12 h-12 rounded-sm bg-olive/10 flex items-center justify-center text-olive mb-6">
+                {a.icon === 'truck' && (
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                )}
+                {a.icon === 'shield' && (
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+                )}
+                {a.icon === 'person' && (
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>
+                )}
+                {a.icon === 'phone' && (
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+                )}
+              </div>
+              <h3 class="font-display font-bold text-[20px] text-ink mb-2 leading-tight">{a.title}</h3>
+              <p class="text-[14px] text-ink/60 leading-relaxed">{a.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GESCHICHTE / TIMELINE ──────────────────────────────────────── -->
+  <section class="bg-[#efeae0] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.4] pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, rgba(26,16,8,0.06) 1px, transparent 0); background-size: 24px 24px;"></div>
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28 relative z-10">
+      <header class="reveal max-w-2xl mb-14">
+        <div class="inline-flex items-center gap-2.5 mb-5">
+          <span class="w-8 h-px bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Unsere Geschichte</span>
+        </div>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-[1.05]">
+          Von 2009 bis heute
+        </h2>
+      </header>
+
+      <ol class="relative max-w-3xl ml-1">
+        <!-- vertical line -->
+        <div class="absolute left-[15px] top-2 bottom-2 w-px bg-ink/15" aria-hidden="true"></div>
+        {
+          timeline.map((t, i) => (
+            <li class="reveal relative pl-12 pb-10 last:pb-0" style={`transition-delay:${i * 60}ms`}>
+              <span class="absolute left-0 top-1 w-8 h-8 rounded-full bg-olive/10 border border-olive/30 flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-olive"></span>
+              </span>
+              {t.year && (
+                <div class="font-display font-bold text-olive text-[15px] tabular tracking-wide mb-1">{t.year}</div>
+              )}
+              <h3 class="font-display font-bold text-ink text-[22px] leading-tight mb-1.5">{t.title}</h3>
+              <p class="text-ink/60 text-[15px] leading-[1.7] max-w-[60ch]">{t.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── CLOSING CTA ────────────────────────────────────────────────── -->
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+      <div class="reveal border-t border-ink/10 pt-14 md:pt-16 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+        <div class="max-w-[54ch]">
+          <div class="inline-flex items-center gap-2.5 mb-4">
+            <span class="w-8 h-px bg-olive"></span>
+            <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Bereit für Alero?</span>
+          </div>
+          <h2 class="font-display font-bold text-ink text-3xl md:text-[40px] leading-[1.05] mb-4">
+            Sprechen Sie mit uns über Ihren <span class="font-serif italic font-normal text-olive">Bedarf</span>
+          </h2>
+          <p class="text-ink/65 text-[15px] leading-[1.7]">
+            Ob Erstbestellung oder laufende Belieferung — wir finden die passende Lösung für Ihren Betrieb.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+          <a href="/kontakt" class="group bg-olive hover:bg-leaf transition text-white font-semibold px-7 py-4 rounded-sm flex items-center justify-center gap-3 text-[14px] shadow-card-hover">
+            Kontakt aufnehmen
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#app-download" class="group bg-white border border-line hover:border-olive text-ink font-semibold px-7 py-4 rounded-sm flex items-center justify-center gap-3 text-[14px] transition">
+            App öffnen
+            <svg class="w-4 h-4 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Organization JSON-LD -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Alero Handels GmbH',
+    url: 'https://alero.at',
+    logo: 'https://alero.at/assets/alero-logo-white.png',
+    foundingDate: '2009',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Dassanowskyweg 16a',
+      postalCode: '1220',
+      addressLocality: 'Wien',
+      addressCountry: 'AT',
+    },
+    telephone: '+43 1 7489520',
+    email: 'office@alero.at',
+  })} />
+</Layout>

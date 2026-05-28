@@ -1,0 +1,213 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CategoryIcon from '../../components/CategoryIcon.astro';
+import { categories, categoryFaq, getCategory } from '../../data/categories';
+
+export function getStaticPaths() {
+  return categories.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const category = getCategory(slug!)!;
+const others = categories.filter((c) => c.slug !== category.slug);
+
+const WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
+---
+
+<Layout
+  title={`${category.name} — Alero Handels GmbH | Großhandel Wien`}
+  description={category.description}
+  canonical={`https://alero.at/produkte/${category.slug}`}
+>
+  <PageHeader
+    title={category.name}
+    crumbs={[
+      { label: 'Startseite', href: '/' },
+      { label: 'Produkte', href: '/produkte' },
+      { label: category.name },
+    ]}
+  />
+
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-16 md:py-24">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+
+        <!-- Main content -->
+        <div class="lg:col-span-8">
+          <div class="reveal flex items-center gap-4 mb-7">
+            <div class={`w-16 h-16 rounded-sm bg-gradient-to-br ${category.iconBg} flex items-center justify-center text-ink/75 flex-shrink-0`}>
+              <CategoryIcon name={category.icon} class="w-9 h-9" />
+            </div>
+            <span class="font-display text-olive/30 text-3xl tabular font-bold">{category.number}</span>
+          </div>
+
+          <h2 class="reveal font-display font-bold text-ink text-3xl md:text-[40px] leading-[1.08] mb-6">
+            {category.name}
+          </h2>
+
+          <div class="reveal prose-alero space-y-5 text-ink/70 text-[16px] leading-[1.8] max-w-[62ch]">
+            <p>{category.description}</p>
+            <p>Alle Artikel aus diesem Bereich finden Sie im vollständigen Katalog in der Alero App — mit aktuellen Preisen, Lagerbestand und einfacher Bestellfunktion.</p>
+          </div>
+
+          <!-- Benefits -->
+          <div class="reveal mt-10 grid sm:grid-cols-3 gap-4">
+            {
+              category.benefits.map((b) => (
+                <div class="bg-white border border-line rounded-sm p-5">
+                  <svg class="w-5 h-5 text-olive mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  <p class="text-[13px] text-ink/70 leading-relaxed">{b}</p>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Examples -->
+          <div class="reveal mt-10">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold mb-4">Beispiele aus dem Sortiment</div>
+            <div class="flex flex-wrap gap-2.5">
+              {
+                category.examples.map((e) => (
+                  <span class="inline-flex items-center bg-white border border-line rounded-full px-4 py-2 text-[13px] text-ink/70">{e}</span>
+                ))
+              }
+            </div>
+            <p class="text-[12px] text-ink/40 mt-3">Auszug — der vollständige Katalog steht in der App bereit.</p>
+          </div>
+
+          <!-- FAQ -->
+          <div class="reveal mt-14">
+            <h3 class="font-display font-bold text-ink text-2xl md:text-[28px] mb-6">Häufige Fragen</h3>
+            <div class="divide-y divide-line border-t border-b border-line">
+              {
+                categoryFaq.map((f) => (
+                  <details class="group">
+                    <summary class="flex items-center justify-between gap-4 cursor-pointer py-5 list-none">
+                      <span class="font-semibold text-ink text-[15px] pr-4">{f.q}</span>
+                      <span class="flex-shrink-0 w-6 h-6 rounded-full border border-line flex items-center justify-center text-olive transition group-open:rotate-45">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                      </span>
+                    </summary>
+                    <p class="text-ink/65 text-[14px] leading-[1.75] pb-5 max-w-[60ch]">{f.a}</p>
+                  </details>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 lg:sticky lg:top-8 space-y-5">
+          <!-- Neukunde mini-form -->
+          <div class="reveal bg-inkdeep text-white rounded-sm p-7">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-olive font-semibold mb-1">Neukunde werden?</div>
+            <h3 class="font-display font-bold text-xl leading-tight mb-2">Jetzt Kunde werden</h3>
+            <p class="text-white/55 text-[13px] mb-5">Wir melden uns innerhalb eines Werktages.</p>
+
+            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-3">
+              <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+              <input type="hidden" name="subject" value={`Neukunde-Anfrage (${category.name}) über alero.at`} />
+              <input type="hidden" name="from_name" value="alero.at — Produktseite" />
+              <input type="hidden" name="kategorie" value={category.name} />
+              <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <input type="text" name="name" required placeholder="Ihr Name" autocomplete="name" class="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-olive focus:ring-2 focus:ring-olive/20 transition" />
+              <input type="tel" name="telefon" required placeholder="Telefonnummer" autocomplete="tel" class="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-olive focus:ring-2 focus:ring-olive/20 transition" />
+              <button type="submit" class="group w-full bg-olive hover:bg-leaf transition text-white font-semibold px-5 py-3.5 rounded-sm flex items-center justify-center gap-2.5 text-[14px]">
+                Anfrage senden
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </button>
+              <p class="text-[11px] text-white/40 text-center">Keine Weitergabe an Dritte</p>
+            </form>
+          </div>
+
+          <!-- Call instead -->
+          <div class="reveal bg-white border border-line rounded-sm p-7" style="transition-delay:80ms">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold mb-2">Lieber anrufen?</div>
+            <a href="tel:+4317489520" class="font-display font-bold text-olive text-2xl tabular hover:text-leaf transition">+43 1 748 95 20</a>
+            <div class="text-[12px] text-ink/50 mt-2">Mo–Do 8–17 Uhr · Fr 8–16 Uhr</div>
+          </div>
+
+          <!-- Category nav -->
+          <nav class="reveal bg-white border border-line rounded-sm p-3" style="transition-delay:120ms" aria-label="Produktbereiche">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold px-4 pt-3 pb-2">Alle Bereiche</div>
+            <ul>
+              {
+                categories.map((c) => (
+                  <li>
+                    <a
+                      href={`/produkte/${c.slug}`}
+                      class={`flex items-center gap-3 px-4 py-2.5 rounded-sm text-[14px] transition ${c.slug === category.slug ? 'bg-olive/10 text-olive font-semibold' : 'text-ink/70 hover:bg-paper'}`}
+                      aria-current={c.slug === category.slug ? 'page' : undefined}
+                    >
+                      <CategoryIcon name={c.icon} class="w-4 h-4 flex-shrink-0" />
+                      <span>{c.name}</span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- App CTA -->
+  <section class="bg-[#efeae0]">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 pb-16 md:pb-24 -mt-2">
+      <div class="reveal bg-ink rounded-sm p-7 md:p-10 flex flex-wrap items-center justify-between gap-6 relative overflow-hidden">
+        <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.05] pointer-events-none" style="background: radial-gradient(circle at center, #3DA84F 0%, transparent 60%);"></div>
+        <div class="relative z-10">
+          <div class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold mb-2">Diesen Bereich in der App ansehen</div>
+          <div class="font-display font-bold text-white text-2xl md:text-[28px] leading-tight max-w-[24ch]">Vollständiger Katalog mit Preisen und Bestellung</div>
+        </div>
+        <a href="#app-download" class="relative z-10 bg-white text-ink hover:bg-olive hover:text-white transition font-semibold px-6 py-3.5 rounded-sm text-[13px] flex items-center gap-2 whitespace-nowrap">
+          App öffnen
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross navigation -->
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-16 md:py-24">
+      <header class="reveal mb-10">
+        <div class="inline-flex items-center gap-2.5 mb-4">
+          <span class="w-8 h-px bg-olive"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Weitere Produktbereiche</span>
+        </div>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-ink leading-tight">Das könnte Sie auch interessieren</h2>
+      </header>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {
+          others.slice(0, 4).map((c, i) => (
+            <a href={`/produkte/${c.slug}`} class="prod-card group reveal bg-white border border-line rounded-sm p-6 flex flex-col" style={`transition-delay:${i * 60}ms`}>
+              <div class={`w-12 h-12 rounded-sm bg-gradient-to-br ${c.iconBg} flex items-center justify-center text-ink/75 mb-5`}>
+                <CategoryIcon name={c.icon} class="w-6 h-6" />
+              </div>
+              <h3 class="font-display font-bold text-[17px] text-ink mb-3 leading-tight flex-1">{c.name}</h3>
+              <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+                Mehr erfahren <span class="prod-arrow inline-block">→</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- BreadcrumbList + Product category JSON-LD -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://alero.at/' },
+      { '@type': 'ListItem', position: 2, name: 'Produkte', item: 'https://alero.at/produkte' },
+      { '@type': 'ListItem', position: 3, name: category.name, item: `https://alero.at/produkte/${category.slug}` },
+    ],
+  })} />
+</Layout>

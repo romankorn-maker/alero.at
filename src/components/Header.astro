@@ -4,6 +4,9 @@ interface Props {
 }
 const { currentPath = '/' } = Astro.props;
 
+// "App öffnen" → big AppPromo section on home, footer download block elsewhere
+const appHref = currentPath === '/' ? '#app' : '#app-download';
+
 const navLinks = [
   { label: 'Startseite', href: '/' },
   { label: 'Über uns',   href: '/ueber-uns' },
@@ -59,7 +62,7 @@ const navLinks = [
         ))}
       </div>
       <button class="lg:hidden text-white text-[13px] font-semibold uppercase tracking-[0.16em]">Menü</button>
-      <a href="/app" class="group bg-olive hover:bg-leaf transition text-white text-[13px] font-semibold px-5 md:px-7 py-3 rounded-sm flex items-center gap-3 ml-auto">
+      <a href={appHref} class="group bg-olive hover:bg-leaf transition text-white text-[13px] font-semibold px-5 md:px-7 py-3 rounded-sm flex items-center gap-3 ml-auto">
         <span>App öffnen</span>
         <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
