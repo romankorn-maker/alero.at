@@ -27,68 +27,55 @@ const trail: Crumb[] =
         <img
           src={image}
           alt={imageAlt}
-          class="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style="object-position: center right;"
+          class="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+          style="object-position: 70% center;"
         />
-        {/* darken left for text legibility, let products show on the right — tuned to match Hero */}
+        {/* darken for text legibility on the left, products stay visible on the right */}
         <div
           class="absolute inset-0 pointer-events-none"
-          style="background: linear-gradient(90deg, rgba(14,9,5,0.62) 0%, rgba(14,9,5,0.46) 36%, rgba(14,9,5,0.12) 70%, rgba(14,9,5,0.28) 100%);"
+          style="background: linear-gradient(90deg, rgba(14,9,5,0.78) 0%, rgba(14,9,5,0.58) 32%, rgba(14,9,5,0.18) 62%, rgba(14,9,5,0.30) 100%);"
         />
       </>
     )
   }
 
-  <!-- gradient floor so the section blends into the light page below -->
+  {/* gradient floor so the section blends into the light page below */}
   <div
     class="absolute inset-0 pointer-events-none"
-    style="background: linear-gradient(180deg, rgba(14,9,5,0.0) 55%, rgba(14,9,5,0.35) 100%);"
+    style="background: linear-gradient(180deg, rgba(14,9,5,0.0) 60%, rgba(14,9,5,0.30) 100%);"
   >
   </div>
 
   {ghost && <div class="absolute right-[-2vw] top-[-2vh] hero-ghost-num select-none">{ghost}</div>}
 
-  <!-- tick marks accent (same as Hero) -->
-  <div class="absolute top-8 left-8 w-32 ticks opacity-50"></div>
+  {!image && <div class="absolute top-8 left-8 w-32 ticks opacity-50"></div>}
 
   <div class="max-w-[1280px] mx-auto px-6 md:px-8 pt-32 md:pt-36 pb-14 md:pb-20 relative z-10">
-    <!-- Breadcrumb -->
     <nav aria-label="Brotkrümelnavigation" class="reveal mb-7">
       <ol class="flex flex-wrap items-center gap-2.5 text-[12px] uppercase tracking-[0.16em]">
-        {
-          trail.map((c, i) => (
-            <li class="flex items-center gap-2.5">
-              {c.href ? (
-                <a href={c.href} class="text-white/45 hover:text-olive transition font-medium">
-                  {c.label}
-                </a>
-              ) : (
-                <span class="text-olive font-semibold">{c.label}</span>
-              )}
-              {i < trail.length - 1 && <span class="text-white/25" aria-hidden="true">›</span>}
-            </li>
-          ))
-        }
+        {trail.map((c, i) => (
+          <li class="flex items-center gap-2.5">
+            {c.href ? (
+              <a href={c.href} class="text-white/45 hover:text-olive transition font-medium">{c.label}</a>
+            ) : (
+              <span class="text-olive font-semibold">{c.label}</span>
+            )}
+            {i < trail.length - 1 && <span class="text-white/25" aria-hidden="true">›</span>}
+          </li>
+        ))}
       </ol>
     </nav>
 
-    <h1
-      class="reveal font-display font-bold text-white text-[44px] md:text-[68px] leading-[0.98] tracking-[-0.01em] max-w-[20ch]"
-    >
+    <h1 class="reveal font-display font-bold text-white text-[44px] md:text-[68px] leading-[0.98] tracking-[-0.01em] max-w-[20ch]">
       {title}
       {titleAccent && <span class="font-serif italic font-normal text-olive"> {titleAccent}</span>}
     </h1>
 
-    {
-      subtitle && (
-        <p
-          class="reveal mt-6 text-white/70 text-[16px] md:text-[18px] leading-[1.7] max-w-[60ch]"
-          style="transition-delay:80ms"
-        >
-          {subtitle}
-        </p>
-      )
-    }
+    {subtitle && (
+      <p class="reveal mt-6 text-white/70 text-[16px] md:text-[18px] leading-[1.7] max-w-[60ch]" style="transition-delay:80ms">
+        {subtitle}
+      </p>
+    )}
 
     <slot />
   </div>
