@@ -11,10 +11,24 @@ const posts = allPosts.sort(
 );
 
 const catMeta = {
-  aktion:    { label: 'Aktion',    cls: 'bg-olive/10 text-olive border-olive/25' },
-  sortiment: { label: 'Sortiment', cls: 'bg-ink/[0.06] text-ink/60 border-line' },
-  tipps:     { label: 'Tipps',     cls: 'bg-cream text-ink/60 border-line' },
+  aktion:    { label: 'Aktion',    cls: 'bg-olive/10 text-olive border-olive/25',  emoji: '⚡', note: 'temporär' },
+  sortiment: { label: 'Sortiment', cls: 'bg-ink/[0.06] text-ink/60 border-line',  emoji: '🌿', note: 'dauerhaft' },
+  tipps:     { label: 'Tipps',     cls: 'bg-cream text-ink/60 border-line',        emoji: '💡', note: 'dauerhaft' },
 } as const;
+
+const catCounts = {
+  aktion:    posts.filter(p => p.data.category === 'aktion').length,
+  sortiment: posts.filter(p => p.data.category === 'sortiment').length,
+  tipps:     posts.filter(p => p.data.category === 'tipps').length,
+};
+
+// Most recent aktion post shown prominently above the main grid
+const featuredAktion = posts.find(p => p.data.category === 'aktion') ?? null;
+
+// All remaining posts excluding the featured one
+const mainPosts = featuredAktion
+  ? posts.filter(p => p.id !== featuredAktion.id)
+  : posts;
 
 function fmtDate(d: Date) {
   return d.toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -33,58 +47,194 @@ function fmtDate(d: Date) {
   />
 
   <section class="bg-paper">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-20 md:py-28">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-12 md:py-16">
 
-      <!-- CSS-only category filter: inputs must be siblings of filter-bar and posts-grid -->
+      <!--
+        CSS-only filter: radio inputs must be direct siblings of .main-grid
+        so that `#f-x:checked ~ .main-grid ...` sibling selectors reach inside.
+      -->
       <div class="filter-root">
         <input type="radio" name="cat" id="f-all"       class="filter-radio" checked>
         <input type="radio" name="cat" id="f-aktion"    class="filter-radio">
         <input type="radio" name="cat" id="f-sortiment" class="filter-radio">
         <input type="radio" name="cat" id="f-tipps"     class="filter-radio">
 
-        <div class="filter-bar reveal flex flex-wrap gap-2 mb-10">
-          <label for="f-all"       class="filter-btn">Alle</label>
-          <label for="f-aktion"    class="filter-btn">Aktionen</label>
-          <label for="f-sortiment" class="filter-btn">Sortiment</label>
-          <label for="f-tipps"     class="filter-btn">Tipps & Service</label>
-        </div>
+        <div class="main-grid grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
-        <div class="posts-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post, i) => {
-            const m = catMeta[post.data.category];
-            return (
-              <a
-                href={`/aktuelles/${post.id}`}
-                data-cat={post.data.category}
-                class="post-card prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col"
-                style={`transition-delay:${(i % 3) * 60}ms`}
-              >
-                <div class="flex items-center justify-between mb-5">
-                  <span class={`text-[11px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-sm border ${m.cls}`}>
-                    {m.label}
-                  </span>
-                  <time
-                    class="text-[12px] text-ink/40 tabular"
-                    datetime={post.data.pubDate.toISOString()}
+          <!-- ── Left column: filter bar + featured + posts ── -->
+          <div class="lg:col-span-8">
+
+            <!-- Filter bar (fix 3: emoji labels, fix 1: lives in left col) -->
+            <div class="filter-bar reveal flex flex-wrap gap-2 mb-8">
+              <label for="f-all"       class="filter-btn">Alle</label>
+              <label for="f-aktion"    class="filter-btn">⚡ Aktion</label>
+              <label for="f-sortiment" class="filter-btn">🌿 Sortiment</label>
+              <label for="f-tipps"     class="filter-btn">💡 Tipps & Service</label>
+            </div>
+
+            <!-- Featured aktion (fix 4) -->
+            {featuredAktion && (
+              <div class="featured-section mb-10">
+                <div class="flex items-center gap-3 mb-5">
+                  <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Aktuelles jetzt</span>
+                  <span class="flex-1 h-px bg-olive/30"></span>
+                </div>
+                <a
+                  href={`/aktuelles/${featuredAktion.id}`}
+                  class="prod-card group reveal block bg-white border-2 border-olive/30 rounded-sm p-7 md:p-9"
+                >
+                  <div class="flex items-center justify-between mb-5">
+                    <span class="text-[11px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-sm border bg-olive/10 text-olive border-olive/25">
+                      ⚡ Aktion
+                    </span>
+                    <time class="text-[12px] text-ink/40 tabular" datetime={featuredAktion.data.pubDate.toISOString()}>
+                      {fmtDate(featuredAktion.data.pubDate)}
+                    </time>
+                  </div>
+                  <h2 class="font-display font-bold text-[28px] md:text-[34px] text-ink leading-tight mb-4">
+                    {featuredAktion.data.title}
+                  </h2>
+                  <p class="text-[15px] text-ink/60 leading-relaxed mb-6">
+                    {featuredAktion.data.description}
+                  </p>
+                  <div class="flex items-center gap-2 text-[13px] font-semibold text-olive uppercase tracking-wider">
+                    Jetzt ansehen <span class="prod-arrow inline-block">→</span>
+                  </div>
+                </a>
+              </div>
+            )}
+
+            <!-- All posts divider -->
+            <div class="reveal flex items-center gap-3 mb-6">
+              <span class="w-8 h-px bg-olive/40"></span>
+              <span class="text-[11px] uppercase tracking-[0.25em] text-ink/40 font-semibold">Alle Beiträge</span>
+            </div>
+
+            <!-- Posts grid (fix 6: entire <a> is the card) -->
+            <div class="posts-grid grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {mainPosts.map((post, i) => {
+                const m = catMeta[post.data.category];
+                return (
+                  <a
+                    href={`/aktuelles/${post.id}`}
+                    data-cat={post.data.category}
+                    class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col"
+                    style={`transition-delay:${(i % 2) * 60}ms`}
                   >
-                    {fmtDate(post.data.pubDate)}
-                  </time>
-                </div>
+                    <div class="flex items-center justify-between mb-5">
+                      <span class={`text-[11px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-sm border ${m.cls}`}>
+                        {m.emoji} {m.label}
+                      </span>
+                      <time class="text-[12px] text-ink/40 tabular" datetime={post.data.pubDate.toISOString()}>
+                        {fmtDate(post.data.pubDate)}
+                      </time>
+                    </div>
+                    <h2 class="font-display font-bold text-[22px] text-ink leading-tight mb-3 flex-1">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-[14px] text-ink/60 leading-relaxed mb-6 line-clamp-3">
+                      {post.data.description}
+                    </p>
+                    <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
+                      Mehr lesen <span class="prod-arrow inline-block">→</span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
 
-                <h2 class="font-display font-bold text-[22px] text-ink leading-tight mb-3 flex-1">
-                  {post.data.title}
-                </h2>
+            <!-- Pagination placeholder -->
+            <div class="mt-10 flex flex-col items-center gap-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="w-10 h-10 rounded-sm flex items-center justify-center text-[14px] font-semibold bg-olive text-white">1</button>
+                <button type="button" disabled class="w-10 h-10 rounded-sm flex items-center justify-center text-[14px] font-semibold bg-white border border-line text-ink/50 opacity-50 cursor-not-allowed">2</button>
+                <button type="button" disabled class="w-10 h-10 rounded-sm flex items-center justify-center text-[14px] font-semibold bg-white border border-line text-ink/50 opacity-50 cursor-not-allowed">3</button>
+                <span class="w-10 h-10 flex items-center justify-center text-[14px] text-ink/30 select-none">…</span>
+                <button type="button" disabled class="w-10 h-10 rounded-sm flex items-center justify-center text-[14px] font-semibold bg-white border border-line text-ink/50 opacity-50 cursor-not-allowed">→</button>
+              </div>
+              <p class="text-[11px] text-ink/40 uppercase tracking-wider">Weitere Seiten in Kürze</p>
+            </div>
 
-                <p class="text-[14px] text-ink/60 leading-relaxed mb-6 line-clamp-3">
-                  {post.data.description}
-                </p>
+          </div>
 
-                <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider">
-                  Mehr lesen <span class="prod-arrow inline-block">→</span>
-                </div>
-              </a>
-            );
-          })}
+          <!-- ── Right column: sidebar (fix 1 + 2) ── -->
+          <aside class="lg:col-span-4 lg:sticky lg:top-8 space-y-5">
+
+            <!-- Kategorien (fix 2a): labels reference the same radio inputs → CSS-only filter -->
+            <div class="reveal bg-white border border-line rounded-sm p-6">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold mb-3">Kategorien</div>
+              <ul class="sidebar-cats space-y-0.5">
+                {(['aktion', 'sortiment', 'tipps'] as const).map(key => {
+                  const m = catMeta[key];
+                  return (
+                    <li>
+                      <label for={`f-${key}`} class="sidebar-cat-label flex items-center justify-between gap-3 px-3 py-2.5 rounded-sm cursor-pointer">
+                        <span class="flex items-center gap-2 min-w-0">
+                          <span class="text-base leading-none">{m.emoji}</span>
+                          <span class="text-[14px] font-medium text-ink/75">{m.label}</span>
+                          <span class="text-[10px] text-ink/35 font-normal whitespace-nowrap">{m.note}</span>
+                        </span>
+                        <span class="flex-shrink-0 text-[11px] font-semibold text-ink/40 tabular bg-ink/[0.05] px-2 py-0.5 rounded-full">
+                          {catCounts[key]}
+                        </span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <!-- Letzte Beiträge (fix 2b) -->
+            <div class="reveal bg-white border border-line rounded-sm p-6" style="transition-delay:80ms">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold mb-3">Letzte Beiträge</div>
+              <ul class="divide-y divide-line">
+                {posts.slice(0, 3).map(post => {
+                  const m = catMeta[post.data.category];
+                  return (
+                    <li>
+                      <a href={`/aktuelles/${post.id}`} class="flex flex-col gap-1.5 py-3.5 group">
+                        <span class={`self-start text-[10px] font-bold uppercase tracking-[0.14em] px-2 py-0.5 rounded-sm border ${m.cls}`}>
+                          {m.emoji} {m.label}
+                        </span>
+                        <span class="text-[13px] font-semibold text-ink group-hover:text-olive transition leading-snug">
+                          {post.data.title}
+                        </span>
+                        <time class="text-[11px] text-ink/38" datetime={post.data.pubDate.toISOString()}>
+                          {fmtDate(post.data.pubDate)}
+                        </time>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <!-- Newsletter-Platzhalter -->
+            <div class="reveal bg-white border border-line rounded-sm p-7" style="transition-delay:160ms">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-olive font-semibold mb-2">Newsletter</div>
+              <h3 class="font-display font-bold text-xl leading-tight mb-2 text-ink">Neue Angebote nicht verpassen</h3>
+              <p class="text-ink/55 text-[13px] mb-5">E-Mail eintragen — wir informieren bei neuen Aktionen.</p>
+              <div class="space-y-3">
+                <input
+                  type="email"
+                  placeholder="ihre@email.at"
+                  disabled
+                  class="w-full bg-paper border border-line rounded-sm px-4 py-3 text-[14px] text-ink placeholder:text-ink/35 cursor-not-allowed"
+                />
+                <button
+                  type="button"
+                  disabled
+                  class="w-full bg-olive text-white font-semibold px-5 py-3.5 rounded-sm text-[14px] opacity-60 cursor-not-allowed"
+                >
+                  Anmelden
+                </button>
+              </div>
+              <p class="text-[11px] text-ink/40 text-center uppercase tracking-wider mt-4">
+                Anmeldung in Kürze verfügbar
+              </p>
+            </div>
+
+          </aside>
         </div>
       </div>
 
@@ -93,7 +243,7 @@ function fmtDate(d: Date) {
 </Layout>
 
 <style>
-  /* Visually hidden radio inputs */
+  /* ── Visually hidden radio inputs (still in DOM for sibling selectors) ── */
   .filter-radio {
     position: absolute;
     width: 1px; height: 1px;
@@ -122,20 +272,47 @@ function fmtDate(d: Date) {
     color: var(--color-olive);
   }
 
-  /* Active filter label — general sibling combinator within .filter-root */
-  #f-all:checked       ~ .filter-bar label[for="f-all"],
-  #f-aktion:checked    ~ .filter-bar label[for="f-aktion"],
-  #f-sortiment:checked ~ .filter-bar label[for="f-sortiment"],
-  #f-tipps:checked     ~ .filter-bar label[for="f-tipps"] {
+  .sidebar-cat-label {
+    transition: background 0.15s;
+  }
+  .sidebar-cat-label:hover {
+    background: var(--color-paper);
+  }
+
+  /* ── Active filter bar button ──
+     Pattern: input ~ .main-grid descendant
+     Works because inputs and .main-grid are siblings inside .filter-root */
+  #f-all:checked       ~ .main-grid .filter-bar label[for="f-all"],
+  #f-aktion:checked    ~ .main-grid .filter-bar label[for="f-aktion"],
+  #f-sortiment:checked ~ .main-grid .filter-bar label[for="f-sortiment"],
+  #f-tipps:checked     ~ .main-grid .filter-bar label[for="f-tipps"] {
     background: var(--color-olive);
     color: white;
     border-color: var(--color-olive);
   }
 
-  /* Hide non-matching posts when a category is selected */
-  #f-aktion:checked    ~ .posts-grid [data-cat]:not([data-cat="aktion"]),
-  #f-sortiment:checked ~ .posts-grid [data-cat]:not([data-cat="sortiment"]),
-  #f-tipps:checked     ~ .posts-grid [data-cat]:not([data-cat="tipps"]) {
+  /* ── Active sidebar category label ── */
+  #f-aktion:checked    ~ .main-grid .sidebar-cats label[for="f-aktion"],
+  #f-sortiment:checked ~ .main-grid .sidebar-cats label[for="f-sortiment"],
+  #f-tipps:checked     ~ .main-grid .sidebar-cats label[for="f-tipps"] {
+    background: color-mix(in srgb, var(--color-olive) 10%, transparent);
+  }
+  #f-aktion:checked    ~ .main-grid .sidebar-cats label[for="f-aktion"] span,
+  #f-sortiment:checked ~ .main-grid .sidebar-cats label[for="f-sortiment"] span,
+  #f-tipps:checked     ~ .main-grid .sidebar-cats label[for="f-tipps"] span {
+    color: var(--color-olive);
+  }
+
+  /* ── Hide non-matching post cards ── */
+  #f-aktion:checked    ~ .main-grid .posts-grid [data-cat]:not([data-cat="aktion"]),
+  #f-sortiment:checked ~ .main-grid .posts-grid [data-cat]:not([data-cat="sortiment"]),
+  #f-tipps:checked     ~ .main-grid .posts-grid [data-cat]:not([data-cat="tipps"]) {
+    display: none;
+  }
+
+  /* ── Hide featured aktion when a non-aktion category is selected ── */
+  #f-sortiment:checked ~ .main-grid .featured-section,
+  #f-tipps:checked     ~ .main-grid .featured-section {
     display: none;
   }
 </style>
