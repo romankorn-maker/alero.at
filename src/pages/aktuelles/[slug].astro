@@ -1,0 +1,211 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('aktuelles');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const catMeta = {
+  aktion:    { label: 'Aktion',    cls: 'bg-olive/10 text-olive border-olive/25' },
+  sortiment: { label: 'Sortiment', cls: 'bg-ink/[0.06] text-ink/60 border-line' },
+  tipps:     { label: 'Tipps',     cls: 'bg-cream text-ink/60 border-line' },
+} as const;
+
+const meta = catMeta[post.data.category];
+
+function fmtDate(d: Date) {
+  return d.toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// Related posts: same category, excluding current, sorted by date
+const allPosts = await getCollection('aktuelles', ({ data }) => !data.archived && !data.draft);
+const related = allPosts
+  .filter((p) => p.id !== post.id && p.data.category === post.data.category)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout
+  title={`${post.data.title} — Alero Handels GmbH`}
+  description={post.data.description}
+  canonical={`https://alero.at/aktuelles/${post.id}`}
+>
+  <PageHeader
+    title={post.data.title}
+    crumbs={[
+      { label: 'Startseite', href: '/' },
+      { label: 'Aktuelles', href: '/aktuelles' },
+      { label: post.data.title },
+    ]}
+  />
+
+  <section class="bg-paper">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-16 md:py-24">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+        <!-- Article body -->
+        <article class="lg:col-span-8">
+
+          <!-- Meta row -->
+          <div class="reveal flex flex-wrap items-center gap-4 mb-8">
+            <span class={`text-[11px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-sm border ${meta.cls}`}>
+              {meta.label}
+            </span>
+            <time
+              class="text-[13px] text-ink/45"
+              datetime={post.data.pubDate.toISOString()}
+            >
+              {fmtDate(post.data.pubDate)}
+            </time>
+          </div>
+
+          <!-- Content -->
+          <div class="reveal prose-alero">
+            <Content />
+          </div>
+
+          <!-- Back link -->
+          <div class="reveal mt-12 pt-8 border-t border-line">
+            <a
+              href="/aktuelles"
+              class="inline-flex items-center gap-2 text-[13px] font-semibold text-olive hover:text-leaf transition uppercase tracking-wider"
+            >
+              <svg class="w-4 h-4 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+              Alle Beiträge
+            </a>
+          </div>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 lg:sticky lg:top-8 space-y-5">
+
+          <!-- CTA contact -->
+          <div class="reveal bg-inkdeep text-white rounded-sm p-7">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-olive font-semibold mb-1">Interesse geweckt?</div>
+            <h3 class="font-display font-bold text-xl leading-tight mb-2">Sprechen Sie uns an</h3>
+            <p class="text-white/55 text-[13px] mb-5">Unser Team berät Sie gerne und erstellt ein individuelles Angebot.</p>
+            <a
+              href="/kontakt"
+              class="group w-full bg-olive hover:bg-leaf transition text-white font-semibold px-5 py-3.5 rounded-sm flex items-center justify-center gap-2.5 text-[14px]"
+            >
+              Kontakt aufnehmen
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <div class="mt-4 pt-4 border-t border-white/10">
+              <a href="tel:+436765946200" class="font-display font-bold text-olive text-2xl tabular hover:text-leaf transition">+43 676 5946200</a>
+              <div class="text-[12px] text-white/45 mt-1">Mo–Do 8–17 Uhr · Fr 8–16 Uhr</div>
+            </div>
+          </div>
+
+          <!-- App CTA -->
+          <div class="reveal bg-white border border-line rounded-sm p-7" style="transition-delay:80ms">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-ink/45 font-semibold mb-2">Vollständiger Katalog</div>
+            <p class="text-[14px] text-ink/65 leading-relaxed mb-4">Alle Produkte, Preise und Verfügbarkeiten — in der Alero App.</p>
+            <a
+              href="#app-download"
+              class="group inline-flex items-center gap-2 bg-ink hover:bg-inkdeep transition text-white font-semibold px-5 py-3 rounded-sm text-[13px]"
+            >
+              App öffnen
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related posts -->
+  {related.length > 0 && (
+    <section class="bg-[#efeae0]">
+      <div class="max-w-[1280px] mx-auto px-6 md:px-8 py-16 md:py-24">
+
+        <header class="reveal mb-10">
+          <div class="inline-flex items-center gap-2.5 mb-4">
+            <span class="w-8 h-px bg-olive"></span>
+            <span class="text-[11px] uppercase tracking-[0.25em] text-olive font-semibold">Weitere Beiträge</span>
+          </div>
+          <h2 class="font-display font-bold text-3xl md:text-4xl text-ink leading-tight">Das könnte Sie auch interessieren</h2>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {related.map((p, i) => {
+            const rm = catMeta[p.data.category];
+            return (
+              <a
+                href={`/aktuelles/${p.id}`}
+                class="prod-card group reveal bg-white border border-line rounded-sm p-7 flex flex-col"
+                style={`transition-delay:${i * 60}ms`}
+              >
+                <div class="flex items-center justify-between mb-5">
+                  <span class={`text-[11px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-sm border ${rm.cls}`}>
+                    {rm.label}
+                  </span>
+                  <time class="text-[12px] text-ink/40 tabular" datetime={p.data.pubDate.toISOString()}>
+                    {fmtDate(p.data.pubDate)}
+                  </time>
+                </div>
+                <h3 class="font-display font-bold text-[20px] text-ink leading-tight mb-3 flex-1">
+                  {p.data.title}
+                </h3>
+                <div class="flex items-center gap-2 text-[12px] font-semibold text-olive uppercase tracking-wider mt-auto">
+                  Mehr lesen <span class="prod-arrow inline-block">→</span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .prose-alero {
+    color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 68ch;
+  }
+  .prose-alero :global(p) {
+    margin-bottom: 1.25rem;
+  }
+  .prose-alero :global(strong) {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .prose-alero :global(h2),
+  .prose-alero :global(h3) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.15;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-alero :global(h2) { font-size: 1.75rem; }
+  .prose-alero :global(h3) { font-size: 1.375rem; }
+  .prose-alero :global(ul),
+  .prose-alero :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .prose-alero :global(li) { margin-bottom: 0.5rem; }
+  .prose-alero :global(a) {
+    color: var(--color-olive);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-olive) 40%, transparent);
+  }
+  .prose-alero :global(a:hover) { color: var(--color-leaf); }
+</style>
